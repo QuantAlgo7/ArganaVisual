@@ -252,21 +252,36 @@ function App() {
       </header>
 
       <main>
-        <div className="container mx-auto px-4 py-32">
-          <div className="text-center max-w-5xl mx-auto relative">
-            <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"></div>
-            <h1 className="text-6xl font-bold mb-6 relative">
-              The Most Powerful<br />
-              AI Platform for Smarter<br />
-              Investment
-            </h1>
-            <p className="text-xl text-gray-300 mb-12 relative">
-              From Wall Street To Main Street, Where AI Meets Your Ambition!
-            </p>
-            <button className="relative bg-emerald-400 hover:bg-emerald-500 text-gray-900 px-12 py-4 rounded-full text-xl font-medium transition-colors">
-              Try Now
-            </button>
+        <div className="relative">
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover opacity-20"
+            >
+              <source src="https://i.imgur.com/M4zF5aF.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 py-32 relative z-10">
+            <div className="text-center max-w-5xl mx-auto relative">
+              <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"></div>
+              <h1 className="text-6xl font-bold mb-6 relative">
+                The Most Powerful<br />
+                AI Platform for Smarter<br />
+                Investment
+              </h1>
+              <p className="text-xl text-gray-300 mb-12 relative">
+                From Wall Street To Main Street, Where AI Meets Your Ambition!
+              </p>
+              <button className="relative bg-emerald-400 hover:bg-emerald-500 text-gray-900 px-12 py-4 rounded-full text-xl font-medium transition-colors">
+                Try Now
+              </button>
+            </div>
           </div>
         </div>
 
