@@ -133,7 +133,7 @@ function App() {
     <div className="relative inline-block text-left"
          onMouseEnter={() => setIsOpen(true)}
          onMouseLeave={() => setIsOpen(false)}>
-      <button className="inline-flex items-center space-x-1 hover:text-blue-400">
+      <button className="nav-link inline-flex items-center space-x-2">
         <span>{title}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
@@ -145,7 +145,7 @@ function App() {
               <a
                 key={index}
                 href={item.href}
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="nav-menu block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
                 role="menuitem"
               >
                 {item.label}
@@ -200,12 +200,17 @@ function App() {
     </div>
   );
 
+  const handlePricingClick = (e) => {
+    e.preventDefault();
+    setShowPricing(true);
+  };
+
   return (
     <div className="min-h-screen animated-bg text-white">
       <header className="glass-effect sticky top-0 z-50 border-b border-gray-800">
         <div className="container mx-auto px-4">
           <nav className="h-16 flex items-center justify-between">
-            <div className="flex items-center space-x-8">
+            <div className="flex-1 flex items-center">
               <div className="flex items-center space-x-3">
                 <img 
                   src="https://imgur.com/7WbDNmQ.png" 
@@ -217,30 +222,34 @@ function App() {
                   <div className="text-xs text-gray-400 -mt-1">Argana Bridge Capital</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-6">
-                <NavDropdown 
-                  title="Product" 
-                  items={productItems}
-                  isOpen={showProductMenu}
-                  setIsOpen={setShowProductMenu}
-                />
-                <NavDropdown 
-                  title="Resources" 
-                  items={resourceItems}
-                  isOpen={showResourcesMenu}
-                  setIsOpen={setShowResourcesMenu}
-                />
-                <NavDropdown 
-                  title="Markets" 
-                  items={marketItems}
-                  isOpen={showMarketsMenu}
-                  setIsOpen={setShowMarketsMenu}
-                />
-                <a href="#pricing" className="hover:text-blue-400">Pricing</a>
-              </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-300 hover:text-white px-4 py-2 rounded-lg">
+            
+            <div className="flex-1 flex items-center justify-center space-x-8">
+              <NavDropdown 
+                title="Product" 
+                items={productItems}
+                isOpen={showProductMenu}
+                setIsOpen={setShowProductMenu}
+              />
+              <NavDropdown 
+                title="Resources" 
+                items={resourceItems}
+                isOpen={showResourcesMenu}
+                setIsOpen={setShowResourcesMenu}
+              />
+              <NavDropdown 
+                title="Markets" 
+                items={marketItems}
+                isOpen={showMarketsMenu}
+                setIsOpen={setShowMarketsMenu}
+              />
+              <a href="#pricing" onClick={handlePricingClick} className="nav-link">
+                Pricing
+              </a>
+            </div>
+
+            <div className="flex-1 flex items-center justify-end space-x-4">
+              <button className="nav-link text-gray-300 hover:text-white">
                 Sign in
               </button>
               <button className="bg-emerald-400 hover:bg-emerald-500 text-gray-900 px-4 py-2 rounded-lg font-medium transition-colors">
@@ -285,7 +294,7 @@ function App() {
           </div>
         </div>
 
-        <section className="py-20 bg-gray-900">
+        <section className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <ImageSection 
               title="Live Trading Signals"
@@ -298,7 +307,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-20 bg-gray-800/50">
+        <section className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <ImageSection 
               title="Advanced Market Analysis"
@@ -312,7 +321,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-20 bg-gray-900">
+        <section className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <ImageSection 
               title="Smart Portfolio Management"
@@ -325,7 +334,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-20 bg-gray-800/50">
+        <section className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <ImageSection 
               title="Professional Risk Management"
@@ -339,7 +348,7 @@ function App() {
           </div>
         </section>
 
-        <section id="features" className="py-20 bg-gray-800/50">
+        <section id="features" className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-center mb-16">Why Choose Argana Bridge Capital</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -375,17 +384,17 @@ function App() {
                   description: "Comprehensive portfolio tracking and management tools"
                 }
               ].map((feature, index) => (
-                <div key={index} className="bg-gray-800 p-8 rounded-xl">
+                <div key={index} className="feature-card p-8 rounded-xl">
                   <div className="mb-4">{feature.icon}</div>
                   <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <p className="text-gray-300">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="py-20 section-divider">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
               {[
@@ -394,16 +403,16 @@ function App() {
                 { value: "24/7", label: "Support" },
                 { value: "50+", label: "Markets" }
               ].map((stat, index) => (
-                <div key={index}>
+                <div key={index} className="feature-card p-6 rounded-xl">
                   <div className="text-4xl font-bold text-blue-500 mb-2">{stat.value}</div>
-                  <div className="text-gray-400">{stat.label}</div>
+                  <div className="text-gray-300">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-20 bg-blue-600">
+        <section className="py-20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-8">Start Trading with Confidence</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -420,7 +429,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="bg-gray-900 py-12">
+      <footer className="footer-bg py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -432,16 +441,16 @@ function App() {
                 />
                 <div className="flex flex-col">
                   <div className="text-2xl font-bold tracking-wider">ABC</div>
-                  <div className="text-sm text-gray-400">Argana Bridge Capital</div>
+                  <div className="text-sm text-gray-300">Argana Bridge Capital</div>
                 </div>
               </div>
-              <p className="text-gray-400">
+              <p className="text-gray-300">
                 Professional trading signals and market analysis for modern investors.
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
+              <ul className="space-y-2 text-gray-300">
                 <li><a href="#features" className="hover:text-blue-400">Features</a></li>
                 <li><a href="#about" className="hover:text-blue-400">About</a></li>
                 <li><a href="#contact" className="hover:text-blue-400">Contact</a></li>
@@ -449,7 +458,7 @@ function App() {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Markets</h4>
-              <ul className="space-y-2 text-gray-400">
+              <ul className="space-y-2 text-gray-300">
                 <li>Forex</li>
                 <li>Cryptocurrencies</li>
                 <li>Stocks</li>
@@ -458,13 +467,13 @@ function App() {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-gray-400">
+              <ul className="space-y-2 text-gray-300">
                 <li>support@arganabridge.com</li>
                 <li>+1 (555) 123-4567</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+          <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-300">
             <p>&copy; 2025 Argana Bridge Capital. All rights reserved.</p>
           </div>
         </div>
@@ -472,12 +481,12 @@ function App() {
 
       {showPricing && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-800 flex justify-between items-center">
+          <div className="pricing-card rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-700 flex justify-between items-center">
               <h2 className="text-2xl font-bold">Choose Your Plan</h2>
               <button 
                 onClick={() => setShowPricing(false)}
-                className="p-2 hover:bg-gray-800 rounded-lg"
+                className="p-2 hover:bg-gray-700/50 rounded-lg"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -487,7 +496,7 @@ function App() {
                 {pricingPlans.map((plan, index) => (
                   <div 
                     key={index}
-                    className={`relative bg-gray-800 rounded-xl p-6 ${
+                    className={`relative pricing-card rounded-xl p-6 ${
                       plan.popular ? 'ring-2 ring-blue-500' : ''
                     }`}
                   >
@@ -506,9 +515,9 @@ function App() {
                       <div className="flex items-baseline">
                         <span className="text-sm">$</span>
                         <span className="text-4xl font-bold">{plan.price}</span>
-                        <span className="text-gray-400 ml-1">/ mo</span>
+                        <span className="text-gray-300 ml-1">/ mo</span>
                       </div>
-                      <div className="text-sm text-gray-400">${plan.yearlyPrice} / yr</div>
+                      <div className="text-sm text-gray-300">${plan.yearlyPrice} / yr</div>
                       <div className="text-sm text-blue-400 mt-1">
                         You save {plan.savings} a year
                       </div>
@@ -525,7 +534,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-6 text-center text-sm text-gray-400">
+                    <div className="mt-6 text-center text-sm text-gray-300">
                       30-day money-back guarantee
                     </div>
                   </div>
