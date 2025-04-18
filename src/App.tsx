@@ -4,18 +4,57 @@ import { BarChart3, Globe2, Shield, TrendingUp, Users2, Wallet, X, Check, Diamon
 function App() {
   const [currentImage, setCurrentImage] = useState(0);
   const [showPricing, setShowPricing] = useState(false);
+  const [currentSection1, setCurrentSection1] = useState(0);
+  const [currentSection2, setCurrentSection2] = useState(0);
+  const [currentSection3, setCurrentSection3] = useState(0);
   
   const tradingImages = [
-    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&h=600",
-    "https://images.unsplash.com/photo-1640340434855-6084b1f4901c?auto=format&fit=crop&w=1200&h=600",
-    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&h=600"
+    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1640340434855-6084b1f4901c?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&h=600"
+  ];
+
+  const marketAnalysisImages = [
+    "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&h=600"
+  ];
+
+  const portfolioImages = [
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1620228885847-9eab2a1adddc?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&h=600"
+  ];
+
+  const riskManagementImages = [
+    "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&h=600",
+    "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&h=600"
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer1 = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % tradingImages.length);
     }, 5000);
-    return () => clearInterval(timer);
+
+    const timer2 = setInterval(() => {
+      setCurrentSection1((prev) => (prev + 1) % marketAnalysisImages.length);
+    }, 6000);
+
+    const timer3 = setInterval(() => {
+      setCurrentSection2((prev) => (prev + 1) % portfolioImages.length);
+    }, 7000);
+
+    const timer4 = setInterval(() => {
+      setCurrentSection3((prev) => (prev + 1) % riskManagementImages.length);
+    }, 8000);
+
+    return () => {
+      clearInterval(timer1);
+      clearInterval(timer2);
+      clearInterval(timer3);
+      clearInterval(timer4);
+    };
   }, []);
 
   const pricingPlans = [
@@ -69,9 +108,51 @@ function App() {
     }
   ];
 
+  const ImageSection = ({ 
+    title, 
+    description, 
+    longDescription,
+    images, 
+    currentIndex, 
+    setCurrentIndex,
+    reverse = false
+  }) => (
+    <div className={`flex flex-col md:flex-row ${reverse ? 'md:flex-row-reverse' : ''} gap-8 items-center`}>
+      <div className="w-full md:w-1/2">
+        <div className="relative overflow-hidden rounded-xl shadow-2xl">
+          <div className="aspect-w-4 aspect-h-3">
+            <img 
+              src={images[currentIndex]} 
+              alt={title} 
+              className="w-full h-full object-cover transition-opacity duration-500"
+            />
+          </div>
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                  currentIndex === index ? 'bg-blue-500' : 'bg-gray-500'
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2 space-y-4">
+        <h3 className="text-2xl font-bold">{title}</h3>
+        <p className="text-xl text-gray-300">{description}</p>
+        <p className="text-gray-400">{longDescription}</p>
+        <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg">
+          Learn More
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      {/* Hero Section */}
       <header className="container mx-auto px-4 py-16">
         <nav className="flex justify-between items-center mb-16">
           <div className="text-2xl font-bold">Argana Bridge Capital</div>
@@ -104,38 +185,60 @@ function App() {
         </div>
       </header>
 
-      {/* Trading Charts Section */}
       <section className="py-20 bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16">Real-Time Trading Signals</h2>
-          <div className="relative overflow-hidden rounded-xl shadow-2xl">
-            <div className="aspect-w-2 aspect-h-1">
-              <img 
-                src={tradingImages[currentImage]} 
-                alt="Trading Chart" 
-                className="w-full h-full object-cover transition-opacity duration-500"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-8">
-              <div className="text-xl font-semibold">Live Trading Signals</div>
-              <p className="text-gray-300">Get real-time market analysis and trading opportunities</p>
-            </div>
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {tradingImages.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                    currentImage === index ? 'bg-blue-500' : 'bg-gray-500'
-                  }`}
-                  onClick={() => setCurrentImage(index)}
-                />
-              ))}
-            </div>
-          </div>
+          <ImageSection 
+            title="Live Trading Signals"
+            description="Real-time Market Analysis"
+            longDescription="Get instant access to professional trading signals and market analysis, helping you make informed trading decisions with confidence."
+            images={tradingImages}
+            currentIndex={currentImage}
+            setCurrentIndex={setCurrentImage}
+          />
         </div>
       </section>
 
-      {/* Features Section */}
+      <section className="py-20 bg-gray-800/50">
+        <div className="container mx-auto px-4">
+          <ImageSection 
+            title="Advanced Market Analysis"
+            description="Deep Market Insights"
+            longDescription="Our advanced analytics platform provides comprehensive market analysis, technical indicators, and trend predictions to give you a competitive edge."
+            images={marketAnalysisImages}
+            currentIndex={currentSection1}
+            setCurrentIndex={setCurrentSection1}
+            reverse={true}
+          />
+        </div>
+      </section>
+
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <ImageSection 
+            title="Smart Portfolio Management"
+            description="Optimize Your Investments"
+            longDescription="Track and manage your portfolio with professional tools, real-time monitoring, and intelligent optimization suggestions."
+            images={portfolioImages}
+            currentIndex={currentSection2}
+            setCurrentIndex={setCurrentSection2}
+          />
+        </div>
+      </section>
+
+      <section className="py-20 bg-gray-800/50">
+        <div className="container mx-auto px-4">
+          <ImageSection 
+            title="Professional Risk Management"
+            description="Protect Your Investments"
+            longDescription="Implement advanced risk management strategies with our comprehensive suite of tools and real-time market monitoring."
+            images={riskManagementImages}
+            currentIndex={currentSection3}
+            setCurrentIndex={setCurrentSection3}
+            reverse={true}
+          />
+        </div>
+      </section>
+
       <section id="features" className="py-20 bg-gray-800/50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16">Why Choose Argana Bridge Capital</h2>
@@ -182,7 +285,6 @@ function App() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
@@ -201,7 +303,6 @@ function App() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 bg-blue-600">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Start Trading with Confidence</h2>
@@ -218,7 +319,6 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-900 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -259,7 +359,6 @@ function App() {
         </div>
       </footer>
 
-      {/* Pricing Modal */}
       {showPricing && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
