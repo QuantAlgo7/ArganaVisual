@@ -206,9 +206,16 @@ function App() {
         <div className="container mx-auto px-4">
           <nav className="h-16 flex items-center justify-between">
             <div className="flex items-center space-x-8">
-              <div className="flex flex-col items-center">
-                <div className="text-3xl font-bold tracking-wider">ABC</div>
-                <div className="text-xs text-gray-400 -mt-1">Argana Bridge Capital</div>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="https://imgur.com/7WbDNmQ.png" 
+                  alt="ABC Logo" 
+                  className="h-10 w-10 object-contain brightness-0 invert"
+                />
+                <div className="flex flex-col">
+                  <div className="text-3xl font-bold tracking-wider">ABC</div>
+                  <div className="text-xs text-gray-400 -mt-1">Argana Bridge Capital</div>
+                </div>
               </div>
               <div className="flex items-center space-x-6">
                 <NavDropdown 
@@ -402,9 +409,16 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex flex-col mb-4">
-                <div className="text-2xl font-bold tracking-wider">ABC</div>
-                <div className="text-sm text-gray-400">Argana Bridge Capital</div>
+              <div className="flex items-center space-x-3 mb-4">
+                <img 
+                  src="https://imgur.com/7WbDNmQ.png" 
+                  alt="ABC Logo" 
+                  className="h-8 w-8 object-contain brightness-0 invert"
+                />
+                <div className="flex flex-col">
+                  <div className="text-2xl font-bold tracking-wider">ABC</div>
+                  <div className="text-sm text-gray-400">Argana Bridge Capital</div>
+                </div>
               </div>
               <p className="text-gray-400">
                 Professional trading signals and market analysis for modern investors.
@@ -511,5 +525,3 @@ function App() {
 }
 
 export default App;
-
-export default App
