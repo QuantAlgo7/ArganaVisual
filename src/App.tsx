@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Globe2, Shield, TrendingUp, Users2, Wallet, X, Check, Diamond, Star, Sparkles } from 'lucide-react';
+import { BarChart3, Globe2, Shield, TrendingUp, Users2, Wallet, X, Check, Diamond, Star, Sparkles, ChevronDown } from 'lucide-react';
 
 function App() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -7,6 +7,9 @@ function App() {
   const [currentSection1, setCurrentSection1] = useState(0);
   const [currentSection2, setCurrentSection2] = useState(0);
   const [currentSection3, setCurrentSection3] = useState(0);
+  const [showProductMenu, setShowProductMenu] = useState(false);
+  const [showResourcesMenu, setShowResourcesMenu] = useState(false);
+  const [showMarketsMenu, setShowMarketsMenu] = useState(false);
   
   const tradingImages = [
     "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&h=600",
@@ -32,30 +35,23 @@ function App() {
     "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&h=600"
   ];
 
-  useEffect(() => {
-    const timer1 = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % tradingImages.length);
-    }, 5000);
+  const productItems = [
+    { label: 'Trading Signals', href: '#' },
+    { label: 'Market Analysis', href: '#' },
+    { label: 'Algorithmic Trading', href: '#' },
+  ];
 
-    const timer2 = setInterval(() => {
-      setCurrentSection1((prev) => (prev + 1) % marketAnalysisImages.length);
-    }, 6000);
+  const resourceItems = [
+    { label: 'Blog', href: '#' },
+    { label: 'FAQ', href: '#' },
+    { label: 'Support', href: '#' },
+  ];
 
-    const timer3 = setInterval(() => {
-      setCurrentSection2((prev) => (prev + 1) % portfolioImages.length);
-    }, 7000);
-
-    const timer4 = setInterval(() => {
-      setCurrentSection3((prev) => (prev + 1) % riskManagementImages.length);
-    }, 8000);
-
-    return () => {
-      clearInterval(timer1);
-      clearInterval(timer2);
-      clearInterval(timer3);
-      clearInterval(timer4);
-    };
-  }, []);
+  const marketItems = [
+    { label: 'Forex', href: '#' },
+    { label: 'Stocks', href: '#' },
+    { label: 'Commodities', href: '#' },
+  ];
 
   const pricingPlans = [
     {
@@ -108,6 +104,59 @@ function App() {
     }
   ];
 
+  useEffect(() => {
+    const timer1 = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % tradingImages.length);
+    }, 5000);
+
+    const timer2 = setInterval(() => {
+      setCurrentSection1((prev) => (prev + 1) % marketAnalysisImages.length);
+    }, 6000);
+
+    const timer3 = setInterval(() => {
+      setCurrentSection2((prev) => (prev + 1) % portfolioImages.length);
+    }, 7000);
+
+    const timer4 = setInterval(() => {
+      setCurrentSection3((prev) => (prev + 1) % riskManagementImages.length);
+    }, 8000);
+
+    return () => {
+      clearInterval(timer1);
+      clearInterval(timer2);
+      clearInterval(timer3);
+      clearInterval(timer4);
+    };
+  }, []);
+
+  const NavDropdown = ({ title, items, isOpen, setIsOpen }) => (
+    <div className="relative inline-block text-left"
+         onMouseEnter={() => setIsOpen(true)}
+         onMouseLeave={() => setIsOpen(false)}>
+      <button className="inline-flex items-center space-x-1 hover:text-blue-400">
+        <span>{title}</span>
+        <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      
+      {isOpen && (
+        <div className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+          <div className="py-1" role="menu">
+            {items.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                role="menuitem"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   const ImageSection = ({ 
     title, 
     description, 
@@ -152,178 +201,211 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <header className="container mx-auto px-4 py-16">
-        <nav className="flex justify-between items-center mb-16">
-          <div className="text-2xl font-bold">Argana Bridge Capital</div>
-          <div className="space-x-6">
-            <a href="#features" className="hover:text-blue-400">Features</a>
-            <a href="#about" className="hover:text-blue-400">About</a>
-            <a href="#contact" className="hover:text-blue-400">Contact</a>
-            <button 
-              onClick={() => setShowPricing(true)}
-              className="bg-blue-600 px-6 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Get Started
-            </button>
-          </div>
-        </nav>
-
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-6xl font-bold mb-6">
-            Professional Trading Signals for Modern Investors
-          </h1>
-          <p className="text-xl text-gray-300 mb-8">
-            Join thousands of traders receiving real-time market analysis and expert trading signals
-          </p>
-          <button 
-            onClick={() => setShowPricing(true)}
-            className="bg-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700"
-          >
-            Start Trading Now
-          </button>
+    <div className="min-h-screen animated-bg text-white">
+      <header className="glass-effect sticky top-0 z-50 border-b border-gray-800">
+        <div className="container mx-auto px-4">
+          <nav className="h-16 flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <div className="flex flex-col items-center">
+                <div className="text-3xl font-bold tracking-wider">ABC</div>
+                <div className="text-xs text-gray-400 -mt-1">Argana Bridge Capital</div>
+              </div>
+              <div className="flex items-center space-x-6">
+                <NavDropdown 
+                  title="Product" 
+                  items={productItems}
+                  isOpen={showProductMenu}
+                  setIsOpen={setShowProductMenu}
+                />
+                <NavDropdown 
+                  title="Resources" 
+                  items={resourceItems}
+                  isOpen={showResourcesMenu}
+                  setIsOpen={setShowResourcesMenu}
+                />
+                <NavDropdown 
+                  title="Markets" 
+                  items={marketItems}
+                  isOpen={showMarketsMenu}
+                  setIsOpen={setShowMarketsMenu}
+                />
+                <a href="#pricing" className="hover:text-blue-400">Pricing</a>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button className="text-gray-300 hover:text-white px-4 py-2 rounded-lg">
+                Sign in
+              </button>
+              <button className="bg-emerald-400 hover:bg-emerald-500 text-gray-900 px-4 py-2 rounded-lg font-medium transition-colors">
+                Try for Free
+              </button>
+            </div>
+          </nav>
         </div>
       </header>
 
-      <section className="py-20 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <ImageSection 
-            title="Live Trading Signals"
-            description="Real-time Market Analysis"
-            longDescription="Get instant access to professional trading signals and market analysis, helping you make informed trading decisions with confidence."
-            images={tradingImages}
-            currentIndex={currentImage}
-            setCurrentIndex={setCurrentImage}
-          />
-        </div>
-      </section>
-
-      <section className="py-20 bg-gray-800/50">
-        <div className="container mx-auto px-4">
-          <ImageSection 
-            title="Advanced Market Analysis"
-            description="Deep Market Insights"
-            longDescription="Our advanced analytics platform provides comprehensive market analysis, technical indicators, and trend predictions to give you a competitive edge."
-            images={marketAnalysisImages}
-            currentIndex={currentSection1}
-            setCurrentIndex={setCurrentSection1}
-            reverse={true}
-          />
-        </div>
-      </section>
-
-      <section className="py-20 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <ImageSection 
-            title="Smart Portfolio Management"
-            description="Optimize Your Investments"
-            longDescription="Track and manage your portfolio with professional tools, real-time monitoring, and intelligent optimization suggestions."
-            images={portfolioImages}
-            currentIndex={currentSection2}
-            setCurrentIndex={setCurrentSection2}
-          />
-        </div>
-      </section>
-
-      <section className="py-20 bg-gray-800/50">
-        <div className="container mx-auto px-4">
-          <ImageSection 
-            title="Professional Risk Management"
-            description="Protect Your Investments"
-            longDescription="Implement advanced risk management strategies with our comprehensive suite of tools and real-time market monitoring."
-            images={riskManagementImages}
-            currentIndex={currentSection3}
-            setCurrentIndex={setCurrentSection3}
-            reverse={true}
-          />
-        </div>
-      </section>
-
-      <section id="features" className="py-20 bg-gray-800/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16">Why Choose Argana Bridge Capital</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <TrendingUp className="w-12 h-12 text-blue-500" />,
-                title: "Expert Analysis",
-                description: "Get professional market analysis and trading signals in real-time"
-              },
-              {
-                icon: <Globe2 className="w-12 h-12 text-blue-500" />,
-                title: "Global Markets",
-                description: "Access signals for forex, cryptocurrencies, stocks, and commodities"
-              },
-              {
-                icon: <BarChart3 className="w-12 h-12 text-blue-500" />,
-                title: "Advanced Analytics",
-                description: "Detailed technical analysis and market insights"
-              },
-              {
-                icon: <Shield className="w-12 h-12 text-blue-500" />,
-                title: "Risk Management",
-                description: "Professional risk management strategies and guidelines"
-              },
-              {
-                icon: <Users2 className="w-12 h-12 text-blue-500" />,
-                title: "Community",
-                description: "Join a community of successful traders and investors"
-              },
-              {
-                icon: <Wallet className="w-12 h-12 text-blue-500" />,
-                title: "Portfolio Management",
-                description: "Comprehensive portfolio tracking and management tools"
-              }
-            ].map((feature, index) => (
-              <div key={index} className="bg-gray-800 p-8 rounded-xl">
-                <div className="mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
-              </div>
-            ))}
+      <main>
+        <div className="container mx-auto px-4 py-32">
+          <div className="text-center max-w-5xl mx-auto relative">
+            <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"></div>
+            <h1 className="text-6xl font-bold mb-6 relative">
+              The Most Powerful<br />
+              AI Platform for Smarter<br />
+              Investment
+            </h1>
+            <p className="text-xl text-gray-300 mb-12 relative">
+              From Wall Street To Main Street, Where AI Meets Your Ambition!
+            </p>
+            <button className="relative bg-emerald-400 hover:bg-emerald-500 text-gray-900 px-12 py-4 rounded-full text-xl font-medium transition-colors">
+              Try Now
+            </button>
           </div>
         </div>
-      </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: "15K+", label: "Active Traders" },
-              { value: "95%", label: "Success Rate" },
-              { value: "24/7", label: "Support" },
-              { value: "50+", label: "Markets" }
-            ].map((stat, index) => (
-              <div key={index}>
-                <div className="text-4xl font-bold text-blue-500 mb-2">{stat.value}</div>
-                <div className="text-gray-400">{stat.label}</div>
-              </div>
-            ))}
+        <section className="py-20 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <ImageSection 
+              title="Live Trading Signals"
+              description="Real-time Market Analysis"
+              longDescription="Get instant access to professional trading signals and market analysis, helping you make informed trading decisions with confidence."
+              images={tradingImages}
+              currentIndex={currentImage}
+              setCurrentIndex={setCurrentImage}
+            />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-20 bg-blue-600">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">Start Trading with Confidence</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join Argana Bridge Capital today and get access to professional trading signals,
-            expert analysis, and a community of successful traders.
-          </p>
-          <button 
-            onClick={() => setShowPricing(true)}
-            className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100"
-          >
-            Get Started Now
-          </button>
-        </div>
-      </section>
+        <section className="py-20 bg-gray-800/50">
+          <div className="container mx-auto px-4">
+            <ImageSection 
+              title="Advanced Market Analysis"
+              description="Deep Market Insights"
+              longDescription="Our advanced analytics platform provides comprehensive market analysis, technical indicators, and trend predictions to give you a competitive edge."
+              images={marketAnalysisImages}
+              currentIndex={currentSection1}
+              setCurrentIndex={setCurrentSection1}
+              reverse={true}
+            />
+          </div>
+        </section>
+
+        <section className="py-20 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <ImageSection 
+              title="Smart Portfolio Management"
+              description="Optimize Your Investments"
+              longDescription="Track and manage your portfolio with professional tools, real-time monitoring, and intelligent optimization suggestions."
+              images={portfolioImages}
+              currentIndex={currentSection2}
+              setCurrentIndex={setCurrentSection2}
+            />
+          </div>
+        </section>
+
+        <section className="py-20 bg-gray-800/50">
+          <div className="container mx-auto px-4">
+            <ImageSection 
+              title="Professional Risk Management"
+              description="Protect Your Investments"
+              longDescription="Implement advanced risk management strategies with our comprehensive suite of tools and real-time market monitoring."
+              images={riskManagementImages}
+              currentIndex={currentSection3}
+              setCurrentIndex={setCurrentSection3}
+              reverse={true}
+            />
+          </div>
+        </section>
+
+        <section id="features" className="py-20 bg-gray-800/50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-4xl font-bold text-center mb-16">Why Choose Argana Bridge Capital</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: <TrendingUp className="w-12 h-12 text-blue-500" />,
+                  title: "Expert Analysis",
+                  description: "Get professional market analysis and trading signals in real-time"
+                },
+                {
+                  icon: <Globe2 className="w-12 h-12 text-blue-500" />,
+                  title: "Global Markets",
+                  description: "Access signals for forex, cryptocurrencies, stocks, and commodities"
+                },
+                {
+                  icon: <BarChart3 className="w-12 h-12 text-blue-500" />,
+                  title: "Advanced Analytics",
+                  description: "Detailed technical analysis and market insights"
+                },
+                {
+                  icon: <Shield className="w-12 h-12 text-blue-500" />,
+                  title: "Risk Management",
+                  description: "Professional risk management strategies and guidelines"
+                },
+                {
+                  icon: <Users2 className="w-12 h-12 text-blue-500" />,
+                  title: "Community",
+                  description: "Join a community of successful traders and investors"
+                },
+                {
+                  icon: <Wallet className="w-12 h-12 text-blue-500" />,
+                  title: "Portfolio Management",
+                  description: "Comprehensive portfolio tracking and management tools"
+                }
+              ].map((feature, index) => (
+                <div key={index} className="bg-gray-800 p-8 rounded-xl">
+                  <div className="mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+              {[
+                { value: "15K+", label: "Active Traders" },
+                { value: "95%", label: "Success Rate" },
+                { value: "24/7", label: "Support" },
+                { value: "50+", label: "Markets" }
+              ].map((stat, index) => (
+                <div key={index}>
+                  <div className="text-4xl font-bold text-blue-500 mb-2">{stat.value}</div>
+                  <div className="text-gray-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 bg-blue-600">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl font-bold mb-8">Start Trading with Confidence</h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto">
+              Join Argana Bridge Capital today and get access to professional trading signals,
+              expert analysis, and a community of successful traders.
+            </p>
+            <button 
+              onClick={() => setShowPricing(true)}
+              className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100"
+            >
+              Get Started Now
+            </button>
+          </div>
+        </section>
+      </main>
 
       <footer className="bg-gray-900 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Argana Bridge Capital</h3>
+              <div className="flex flex-col mb-4">
+                <div className="text-2xl font-bold tracking-wider">ABC</div>
+                <div className="text-sm text-gray-400">Argana Bridge Capital</div>
+              </div>
               <p className="text-gray-400">
                 Professional trading signals and market analysis for modern investors.
               </p>
@@ -429,3 +511,5 @@ function App() {
 }
 
 export default App;
+
+export default App
