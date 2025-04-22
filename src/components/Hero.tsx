@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, ChevronDown, Activity, TrendingUp, LineChart, BarChart4, Zap } from 'lucide-react';
+import { ChevronDown, Coins, BarChart4, Bitcoin, Globe, Brain, Zap } from 'lucide-react';
 import ParticleNetwork from '../utils/ParticleNetwork';
 import MiniChart from './charts/MiniChart';
 
@@ -13,39 +13,39 @@ const generateChartData = (length: number, volatility: number) => {
 
 const chartConfigs = [
   {
-    title: 'Neural Alpha',
+    title: 'Commodities',
     data: generateChartData(100, 0.15),
     color: '#00F5C4',
-    icon: Brain,
-    metrics: { value: '+28.5%', label: 'Annual Return' }
+    icon: Coins,
+    metrics: { value: '81%', label: 'Win Rate' }
   },
   {
-    title: 'Quantum Edge',
+    title: 'Indices',
     data: generateChartData(100, 0.2),
     color: '#0D4C73',
-    icon: Activity,
-    metrics: { value: '2.84', label: 'Sharpe Ratio' }
+    icon: BarChart4,
+    metrics: { value: '87%', label: 'Win Rate' }
   },
   {
-    title: 'Momentum Flow',
+    title: 'Cryptos',
     data: generateChartData(100, 0.18),
     color: '#FF4444',
-    icon: TrendingUp,
-    metrics: { value: '71.2%', label: 'Win Rate' }
+    icon: Bitcoin,
+    metrics: { value: '75%', label: 'Win Rate' }
   },
   {
-    title: 'Volatility Grid',
+    title: 'Forex',
     data: generateChartData(100, 0.25),
     color: '#FFB800',
-    icon: LineChart,
-    metrics: { value: '12.3%', label: 'Max Drawdown' }
+    icon: Globe,
+    metrics: { value: '72%', label: 'Win Rate' }
   },
   {
-    title: 'Alpha Surge',
+    title: 'ABC Strategy',
     data: generateChartData(100, 0.22),
     color: '#9945FF',
-    icon: BarChart4,
-    metrics: { value: '+18.7%', label: 'Alpha' }
+    icon: Brain,
+    metrics: { value: '91%', label: 'Win Rate' }
   }
 ];
 

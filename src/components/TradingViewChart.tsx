@@ -1,22 +1,36 @@
 import { useState } from 'react';
-import { ArrowRight, TrendingUp, Activity, BarChart4, Percent } from 'lucide-react';
+import { ArrowRight, TrendingUp, Activity, BarChart4, Percent, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import StrategyChart from './charts/StrategyChart';
-import DrawdownChart from './charts/DrawdownChart';
+import { Tooltip } from './Tooltip';
 
 interface Strategy {
   id: string;
   name: string;
   description: string;
   metrics: {
-    sharpe: number;
+    winRate: number;
     cagr: number;
     maxDrawdown: number;
-    winRate: number;
+    sharpe: number;
   };
   data: Array<{ date: string; value: number }>;
-  drawdownData: Array<{ date: string; value: number }>;
 }
+
+// Helper function to generate exponential growth data with noise
+const generateExponentialData = (cagr: number, volatility: number) => {
+  const days = 365;
+  const dailyReturn = Math.pow(1 + cagr / 100, 1 / days) - 1;
+  
+  return Array.from({ length: days }, (_, i) => {
+    const smoothGrowth = 1000 * Math.pow(1 + dailyReturn, i);
+    const noise = smoothGrowth * (1 + (Math.random() - 0.5) * volatility);
+    return {
+      date: new Date(2023, 0, i + 1).toISOString(),
+      value: noise
+    };
+  });
+};
 
 const strategies: Strategy[] = [
   {
@@ -24,44 +38,59 @@ const strategies: Strategy[] = [
     name: 'Alpha Momentum',
     description: 'Advanced momentum strategy with neural network-driven entry and exit signals',
     metrics: {
-      sharpe: 2.8,
-      cagr: 24.5,
-      maxDrawdown: 12.3,
-      winRate: 68.5
+      winRate: 96,
+      cagr: 158,
+      maxDrawdown: 4.1,
+      sharpe: 3.8
     },
-    data: Array.from({ length: 100 }, (_, i) => ({
-      date: new Date(2023, 0, i + 1).toISOString(),
-      value: 1000 * Math.exp(0.001 * i + 0.1 * Math.sin(i * 0.1))
-    })),
-    drawdownData: Array.from({ length: 100 }, (_, i) => ({
-      date: new Date(2023, 0, i + 1).toISOString(),
-      value: -Math.abs(5 * Math.sin(i * 0.1))
-    }))
+    data: generateExponentialData(158, 0.002)
   },
   {
     id: 'quantum-volatility',
     name: 'Quantum Volatility',
     description: 'Volatility harvesting strategy powered by quantum computing algorithms',
     metrics: {
-      sharpe: 3.1,
-      cagr: 28.7,
-      maxDrawdown: 15.2,
-      winRate: 71.3
+      winRate: 87,
+      cagr: 134,
+      maxDrawdown: 3.9,
+      sharpe: 3.4
     },
-    data: Array.from({ length: 100 }, (_, i) => ({
-      date: new Date(2023, 0, i + 1).toISOString(),
-      value: 1000 * Math.exp(0.002 * i + 0.15 * Math.cos(i * 0.1))
-    })),
-    drawdownData: Array.from({ length: 100 }, (_, i) => ({
-      date: new Date(2023, 0, i + 1).toISOString(),
-      value: -Math.abs(7 * Math.cos(i * 0.1))
-    }))
+    data: generateExponentialData(134, 0.002)
+  },
+  {
+    id: 'institutional-nexus',
+    name: 'Institutional Nexus',
+    description: 'Enterprise-grade algorithmic trading system with institutional-level risk management',
+    metrics: {
+      winRate: 79,
+      cagr: 108,
+      maxDrawdown: 4.7,
+      sharpe: 3.1
+    },
+    data: generateExponentialData(108, 0.002)
   }
 ];
+
+const metricDefinitions = {
+  winRate: "Percentage of profitable trades out of total trades executed.",
+  sharpe: "A risk-adjusted return measure; higher values indicate better return per unit of risk.",
+  cagr: "Compound Annual Growth Rate – the mean annual growth rate of an investment over a specified time period.",
+  maxDrawdown: "The peak-to-trough decline during a specific recorded period of a trading strategy."
+};
 
 const TradingViewChart = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<Strategy>(strategies[0]);
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+
+  const MetricDisplay = ({ label, value, definition }: { label: string; value: number | string; definition: string }) => (
+    <div className="metric group relative">
+      <div className="flex items-center">
+        <span>{label}: {typeof value === 'number' ? `${value}%` : value}</span>
+        <Info size={14} className="ml-1.5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+      </div>
+      <Tooltip content={definition} />
+    </div>
+  );
 
   return (
     <section id="chart" className="section bg-dark-light relative">
@@ -71,7 +100,7 @@ const TradingViewChart = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
           <div>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">
-              AI-Powered Trading Strategies
+              Annualized Performance Metrics
             </h2>
             <p className="text-light-dark max-w-2xl">
               Experience the future of algorithmic trading with our neural network-driven strategies.
@@ -99,45 +128,42 @@ const TradingViewChart = () => {
                   {strategy.description}
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="metric">
-                    <TrendingUp size={14} className="mr-1.5 text-accent" />
-                    <span>Sharpe: {strategy.metrics.sharpe}</span>
-                  </div>
-                  <div className="metric">
-                    <Activity size={14} className="mr-1.5 text-accent" />
-                    <span>CAGR: {strategy.metrics.cagr}%</span>
-                  </div>
-                  <div className="metric">
-                    <BarChart4 size={14} className="mr-1.5 text-accent" />
-                    <span>DD: {strategy.metrics.maxDrawdown}%</span>
-                  </div>
-                  <div className="metric">
-                    <Percent size={14} className="mr-1.5 text-accent" />
-                    <span>Win: {strategy.metrics.winRate}%</span>
-                  </div>
+                  <MetricDisplay 
+                    label="Win Rate"
+                    value={strategy.metrics.winRate}
+                    definition={metricDefinitions.winRate}
+                  />
+                  <MetricDisplay 
+                    label="CAGR"
+                    value={strategy.metrics.cagr}
+                    definition={metricDefinitions.cagr}
+                  />
+                  <MetricDisplay 
+                    label="Drawdown"
+                    value={strategy.metrics.maxDrawdown}
+                    definition={metricDefinitions.maxDrawdown}
+                  />
+                  <MetricDisplay 
+                    label="Sharpe"
+                    value={strategy.metrics.sharpe.toFixed(1)}
+                    definition={metricDefinitions.sharpe}
+                  />
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Charts */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Chart */}
+          <div className="lg:col-span-2">
             <div className="card">
               <h3 className="text-lg font-semibold mb-4">Strategy Performance</h3>
-              <div className="h-[300px]">
+              <div className="h-[400px]">
                 <StrategyChart data={selectedStrategy.data} />
               </div>
             </div>
 
-            <div className="card">
-              <h3 className="text-lg font-semibold mb-4">Drawdown Analysis</h3>
-              <div className="h-[200px]">
-                <DrawdownChart data={selectedStrategy.drawdownData} />
-              </div>
-            </div>
-
             <motion.button
-              className="btn-accent w-full"
+              className="btn-accent w-full mt-6"
               onClick={() => setShowSubscribeModal(true)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AreaClosed, LinePath, Line } from '@visx/shape';
+import { AreaClosed, LinePath } from '@visx/shape';
 import { curveMonotoneX } from '@visx/curve';
 import { scaleTime, scaleLinear } from '@visx/scale';
 import { LinearGradient } from '@visx/gradient';
@@ -16,7 +16,7 @@ interface StrategyChartProps {
   height?: number;
 }
 
-const StrategyChart = ({ data, width = 800, height = 300 }: StrategyChartProps) => {
+const StrategyChart = ({ data, width = 800, height = 400 }: StrategyChartProps) => {
   const margin = { top: 20, right: 20, bottom: 20, left: 50 };
 
   const innerWidth = width - margin.left - margin.right;
