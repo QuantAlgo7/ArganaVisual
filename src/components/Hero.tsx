@@ -69,6 +69,13 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const scrollToStrategies = () => {
+    const strategiesSection = document.getElementById('strategies');
+    if (strategiesSection) {
+      strategiesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section 
       id="home" 
@@ -141,16 +148,16 @@ const Hero = () => {
         </div>
 
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <button className="btn-accent">
+          <button 
+            className="btn-accent"
+            onClick={scrollToStrategies}
+          >
             Explore Strategies
-          </button>
-          <button className="btn bg-dark-lighter hover:bg-dark-light text-light">
-            Learn More
           </button>
         </motion.div>
 
