@@ -4,22 +4,38 @@ import { Brain, Search, TrendingUp, Activity, BarChart2, Zap } from 'lucide-reac
 import SubscriptionModal from '../components/SubscriptionModal';
 import { strategies } from '../data/strategies';
 
+const riskCategories = [
+  { id: 'all', name: 'All Strategies', icon: Brain },
+  { id: 'high', name: 'High Risk', icon: TrendingUp },
+  { id: 'medium', name: 'Medium Risk', icon: Activity },
+  { id: 'low', name: 'Low Risk', icon: BarChart2 },
+];
+
+// Assign risk levels to strategies based on metrics
+const getStrategyRiskLevel = (strategy: any) => {
+  const riskScore = (strategy.metrics.maxDrawdown * 0.4) + 
+                   (100 - strategy.metrics.winRate) * 0.3 + 
+                   (30 - strategy.metrics.sharpe) * 0.3;
+  
+  if (riskScore > 40) return 'high';
+  if (riskScore > 20) return 'medium';
+  return 'low';
+};
+
 const AllStrategies = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const categories = [
-    { id: 'all', name: 'All Strategies', icon: Brain },
-    { id: 'momentum', name: 'Momentum', icon: TrendingUp },
-    { id: 'mean-reversion', name: 'Mean Reversion', icon: Activity },
-    { id: 'volatility', name: 'Volatility', icon: BarChart2 },
-    { id: 'arbitrage', name: 'Arbitrage', icon: Zap },
-  ];
+  // Assign risk levels to strategies
+  const strategiesWithRisk = strategies.map(strategy => ({
+    ...strategy,
+    riskLevel: getStrategyRiskLevel(strategy)
+  }));
 
-  const filteredStrategies = strategies.filter(strategy =>
-    (activeCategory === 'all' || strategy.category === activeCategory) &&
+  const filteredStrategies = strategiesWithRisk.filter(strategy =>
+    (activeCategory === 'all' || strategy.riskLevel === activeCategory) &&
     (strategy.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     strategy.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()))
   );
@@ -56,7 +72,7 @@ const AllStrategies = () => {
         >
           <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
             <span className="bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
-              List of Our Advanced Trading Strategies
+              Complete List of Our Advanced Trading Strategies
             </span>
           </h1>
           <p className="text-xl text-light-dark max-w-3xl mx-auto">
@@ -67,9 +83,9 @@ const AllStrategies = () => {
         {/* Filters */}
         <div className="max-w-6xl mx-auto mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-            {/* Category Filters */}
+            {/* Risk Category Filters */}
             <div className="flex flex-wrap gap-3">
-              {categories.map(category => (
+              {riskCategories.map(category => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
@@ -120,8 +136,12 @@ const AllStrategies = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center justify-between">
                   <Brain className="text-accent w-12 h-12" />
-                  <span className="text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
-                    {strategy.category}
+                  <span className={`text-xs px-3 py-1 rounded-full ${
+                    strategy.riskLevel === 'high' ? 'bg-red-500/10 text-red-400' :
+                    strategy.riskLevel === 'medium' ? 'bg-yellow-500/10 text-yellow-400' :
+                    'bg-green-500/10 text-green-400'
+                  }`}>
+                    {strategy.riskLevel.charAt(0).toUpperCase() + strategy.riskLevel.slice(1)} Risk
                   </span>
                 </div>
               </div>
