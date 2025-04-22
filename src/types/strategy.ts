@@ -6,6 +6,7 @@ export interface Strategy {
   logicDescription: string;
   marketApplication: string;
   chartUrl: string;
+  category: 'momentum' | 'mean-reversion' | 'volatility' | 'arbitrage';
   metrics: {
     sharpe: number;
     cagr: number;

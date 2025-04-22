@@ -17,30 +17,63 @@ interface Strategy {
   data: Array<{ date: string; value: number }>;
 }
 
-// Enhanced exponential data generator with smoothed noise
-const generateExponentialData = (cagr: number, volatility: number) => {
+// Enhanced data generator with controlled drawdowns
+const generateStrategyData = (cagr: number, drawdowns: Array<{ size: number; position: number }>) => {
   const days = 365;
   const dailyReturn = Math.pow(1 + cagr / 100, 1 / days) - 1;
-  const noiseScale = volatility / 200; // Reduce noise amplitude for smoother curves
+  const data = [];
+  let currentValue = 1000;
+  let inDrawdown = false;
+  let drawdownIndex = 0;
+  let recoveryRate = 0;
   
-  // Generate initial noise array
-  const noiseArray = Array.from({ length: days }, () => Math.random() - 0.5);
-  
-  // Apply simple moving average to smooth noise
-  const smoothedNoise = noiseArray.map((_, i) => {
-    const window = noiseArray.slice(Math.max(0, i - 5), Math.min(days, i + 6));
-    return window.reduce((sum, val) => sum + val, 0) / window.length;
-  });
-  
-  return Array.from({ length: days }, (_, i) => {
-    const smoothGrowth = 1000 * Math.pow(1 + dailyReturn, i);
-    const noise = smoothGrowth * (1 + smoothedNoise[i] * noiseScale);
-    return {
+  for (let i = 0; i < days; i++) {
+    // Check if we should start a drawdown
+    if (drawdownIndex < drawdowns.length && i === drawdowns[drawdownIndex].position) {
+      inDrawdown = true;
+      const drawdownSize = drawdowns[drawdownIndex].size;
+      recoveryRate = drawdownSize / 10; // Recover over ~10 days
+    }
+    
+    if (inDrawdown) {
+      currentValue *= (1 - drawdowns[drawdownIndex].size / 100);
+      inDrawdown = false;
+      drawdownIndex++;
+    } else {
+      // Add small random noise (-0.1% to 0.1%) to daily returns
+      const noise = (Math.random() - 0.5) * 0.002;
+      currentValue *= (1 + dailyReturn + noise);
+      
+      // Recovery phase after drawdown
+      if (drawdownIndex > 0 && i < drawdowns[drawdownIndex - 1].position + 10) {
+        currentValue *= (1 + recoveryRate / 100);
+      }
+    }
+    
+    data.push({
       date: new Date(2023, 0, i + 1).toISOString(),
-      value: noise
-    };
-  });
+      value: currentValue
+    });
+  }
+  
+  return data;
 };
+
+const alphaMomentumDrawdowns = [
+  { size: 1.0, position: 30 },
+  { size: 1.5, position: 120 },
+  { size: 2.0, position: 240 }
+];
+
+const quantumVolatilityDrawdowns = Array.from({ length: 15 }, (_, i) => ({
+  size: 1 + Math.random() * 2, // Random drawdown between 1% and 3%
+  position: Math.floor(20 + (i * (365 - 40) / 15)) // Evenly spread throughout the year
+}));
+
+const kronosMacroDrawdowns = Array.from({ length: 9 }, (_, i) => ({
+  size: 1 + Math.random(), // Random drawdown between 1% and 2%
+  position: Math.floor(25 + (i * (365 - 50) / 9)) // Evenly spread throughout the year
+}));
 
 const strategies: Strategy[] = [
   {
@@ -53,7 +86,7 @@ const strategies: Strategy[] = [
       maxDrawdown: 4.1,
       sharpe: 3.8
     },
-    data: generateExponentialData(158, 4.1)
+    data: generateStrategyData(158, alphaMomentumDrawdowns)
   },
   {
     id: 'quantum-volatility',
@@ -65,7 +98,7 @@ const strategies: Strategy[] = [
       maxDrawdown: 3.9,
       sharpe: 3.4
     },
-    data: generateExponentialData(134, 3.9)
+    data: generateStrategyData(134, quantumVolatilityDrawdowns)
   },
   {
     id: 'kronos-macro',
@@ -77,7 +110,7 @@ const strategies: Strategy[] = [
       maxDrawdown: 4.7,
       sharpe: 3.1
     },
-    data: generateExponentialData(108, 4.7)
+    data: generateStrategyData(108, kronosMacroDrawdowns)
   }
 ];
 
@@ -93,9 +126,9 @@ const TradingViewChart = () => {
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
 
   const MetricDisplay = ({ label, value, definition }: { label: string; value: number | string; definition: string }) => (
-    <div className="metric group relative">
+    <div className="metric group relative bg-dark-card border border-dark-lighter">
       <div className="flex items-center">
-        <span>{label}: {typeof value === 'number' ? `${value}%` : value}</span>
+        <span className="text-light">{label}: <span className="text-accent">{typeof value === 'number' ? `${value}%` : value}</span></span>
         <Info size={14} className="ml-1.5 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
       </div>
       <Tooltip content={definition} />

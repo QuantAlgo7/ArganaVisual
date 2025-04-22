@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { LineChart, TrendingUp, BarChart4, AlertCircle, DollarSign } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 import SubscriptionModal from './SubscriptionModal';
 import StrategyCard from './StrategyCard';
 import { strategies } from '../data/strategies';
+import { useNavigate } from 'react-router-dom';
 
 const StrategyDashboard = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleBuyClick = (id: number) => {
     setSelectedStrategy(id);
@@ -29,36 +31,9 @@ const StrategyDashboard = () => {
           </p>
         </div>
 
-        {/* Strategy stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
-          <div className="card flex flex-col items-center text-center p-6">
-            <LineChart className="text-accent mb-3" size={32} />
-            <h3 className="font-display font-semibold text-xl mb-1">12.6%</h3>
-            <p className="text-light-dark text-sm">Average Annual Return</p>
-          </div>
-          
-          <div className="card flex flex-col items-center text-center p-6">
-            <TrendingUp className="text-accent mb-3" size={32} />
-            <h3 className="font-display font-semibold text-xl mb-1">2.53</h3>
-            <p className="text-light-dark text-sm">Sharpe Ratio</p>
-          </div>
-          
-          <div className="card flex flex-col items-center text-center p-6">
-            <BarChart4 className="text-accent mb-3" size={32} />
-            <h3 className="font-display font-semibold text-xl mb-1">8.2%</h3>
-            <p className="text-light-dark text-sm">Maximum Drawdown</p>
-          </div>
-          
-          <div className="card flex flex-col items-center text-center p-6">
-            <AlertCircle className="text-accent mb-3" size={32} />
-            <h3 className="font-display font-semibold text-xl mb-1">71.4%</h3>
-            <p className="text-light-dark text-sm">Win Rate</p>
-          </div>
-        </div>
-
         {/* Strategy cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {strategies.map((strategy) => (
+          {strategies.slice(0, 6).map((strategy) => (
             <StrategyCard 
               key={strategy.id}
               strategy={strategy}
@@ -69,7 +44,10 @@ const StrategyDashboard = () => {
 
         {/* CTA */}
         <div className="mt-16 text-center">
-          <button className="btn-primary">
+          <button 
+            className="btn-primary"
+            onClick={() => navigate('/strategies')}
+          >
             <DollarSign size={18} className="mr-2" />
             View All Trading Strategies
           </button>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FuturisticShowcase from './components/FuturisticShowcase';
@@ -7,6 +8,7 @@ import TradingViewChart from './components/TradingViewChart';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import AllStrategies from './pages/AllStrategies';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,18 +35,25 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-dark text-light">
-      <Navbar />
-      <main>
-        <Hero />
-        <FuturisticShowcase />
-        <TradingViewChart />
-        <StrategyDashboard />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-dark text-light">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={
+            <main>
+              <Hero />
+              <FuturisticShowcase />
+              <TradingViewChart />
+              <StrategyDashboard />
+              <Testimonials />
+              <Contact />
+            </main>
+          } />
+          <Route path="/strategies" element={<AllStrategies />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
