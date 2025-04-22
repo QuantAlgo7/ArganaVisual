@@ -17,14 +17,24 @@ interface Strategy {
   data: Array<{ date: string; value: number }>;
 }
 
-// Helper function to generate exponential growth data with noise
+// Enhanced exponential data generator with smoothed noise
 const generateExponentialData = (cagr: number, volatility: number) => {
   const days = 365;
   const dailyReturn = Math.pow(1 + cagr / 100, 1 / days) - 1;
+  const noiseScale = volatility / 200; // Reduce noise amplitude for smoother curves
+  
+  // Generate initial noise array
+  const noiseArray = Array.from({ length: days }, () => Math.random() - 0.5);
+  
+  // Apply simple moving average to smooth noise
+  const smoothedNoise = noiseArray.map((_, i) => {
+    const window = noiseArray.slice(Math.max(0, i - 5), Math.min(days, i + 6));
+    return window.reduce((sum, val) => sum + val, 0) / window.length;
+  });
   
   return Array.from({ length: days }, (_, i) => {
     const smoothGrowth = 1000 * Math.pow(1 + dailyReturn, i);
-    const noise = smoothGrowth * (1 + (Math.random() - 0.5) * volatility);
+    const noise = smoothGrowth * (1 + smoothedNoise[i] * noiseScale);
     return {
       date: new Date(2023, 0, i + 1).toISOString(),
       value: noise
@@ -43,7 +53,7 @@ const strategies: Strategy[] = [
       maxDrawdown: 4.1,
       sharpe: 3.8
     },
-    data: generateExponentialData(158, 0.002)
+    data: generateExponentialData(158, 4.1)
   },
   {
     id: 'quantum-volatility',
@@ -55,11 +65,11 @@ const strategies: Strategy[] = [
       maxDrawdown: 3.9,
       sharpe: 3.4
     },
-    data: generateExponentialData(134, 0.002)
+    data: generateExponentialData(134, 3.9)
   },
   {
-    id: 'institutional-nexus',
-    name: 'Institutional Nexus',
+    id: 'kronos-macro',
+    name: 'Kronos Macro System',
     description: 'Enterprise-grade algorithmic trading system with institutional-level risk management',
     metrics: {
       winRate: 79,
@@ -67,7 +77,7 @@ const strategies: Strategy[] = [
       maxDrawdown: 4.7,
       sharpe: 3.1
     },
-    data: generateExponentialData(108, 0.002)
+    data: generateExponentialData(108, 4.7)
   }
 ];
 
@@ -99,12 +109,12 @@ const TradingViewChart = () => {
       <div className="container mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
           <div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">
-              Annualized Performance Metrics
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-accent to-primary-light bg-clip-text text-transparent">
+              AI-Powered Trading Strategies
             </h2>
-            <p className="text-light-dark max-w-2xl">
-              Experience the future of algorithmic trading with our neural network-driven strategies.
-            </p>
+            <h3 className="text-2xl md:text-3xl font-display text-light-dark">
+              Annualized Performance Metrics
+            </h3>
           </div>
         </div>
 
