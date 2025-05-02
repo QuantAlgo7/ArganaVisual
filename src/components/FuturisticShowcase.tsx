@@ -4,12 +4,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const showcaseImages = [
   {
-    url: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg',
-    caption: 'Neural Networks Evolving'
+    url: 'https://i.imgur.com/bmO4Iy8.png',
+    caption: 'Quant Algo 1'
   },
   {
-    url: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg',
-    caption: 'Digital Intelligence'
+    url: 'https://i.imgur.com/IXYrBtZ.png',
+    caption: 'Quant Algo 2'
   },
   {
     url: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg',
