@@ -41,7 +41,7 @@ export const strategies: Strategy[] = [
     longDescription: 'Harnesses the power of neural networks to predict and capitalize on volatility patterns across markets.',
     logicDescription: 'Employs deep learning models trained on historical volatility patterns to predict future market movements.',
     marketApplication: 'Particularly effective in high-volatility environments and during market regime changes.',
-    chartUrl: 'https://i.imgur.com/GBtWTkp.png',
+    chartUrl: 'https://i.imgur.com/NvEtjh5.png',
     metrics: generateMetrics(3)
   }
 ].concat(
@@ -76,7 +76,7 @@ export const strategies: Strategy[] = [
     longDescription: 'Sophisticated trading strategy leveraging cutting-edge AI and machine learning techniques.',
     logicDescription: 'Utilizes deep learning models and advanced statistical methods to identify trading opportunities.',
     marketApplication: 'Suitable for institutional-grade trading across multiple asset classes.',
-    chartUrl: '',
+    chartUrl: i === 0 ? 'https://i.imgur.com/H9aXN0Y.png' : i === 1 ? 'https://i.imgur.com/zcrzsEI.png' : i === 2 ? 'https://i.imgur.com/7Rlg9LC.png' : '',
     metrics: generateMetrics(i + 4)
   }))
 );
