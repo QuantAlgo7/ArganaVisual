@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ParticleNetwork from '../utils/ParticleNetwork';
 
 const showcaseImages = [
   {
@@ -16,6 +17,16 @@ const showcaseImages = [
 const FuturisticShowcase = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const particleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!particleRef.current) return;
+    
+    const particleInstance = new ParticleNetwork(particleRef.current);
+    return () => {
+      particleInstance.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -39,8 +50,7 @@ const FuturisticShowcase = () => {
 
   return (
     <section className="relative h-screen overflow-hidden bg-dark">
-      {/* Digital Grid Background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div ref={particleRef} className="particle-container"></div>
       
       {/* Screen Frame */}
       <div className="absolute inset-0 max-w-6xl mx-auto my-16 px-4">
