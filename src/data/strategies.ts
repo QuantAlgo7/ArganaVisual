@@ -19,7 +19,7 @@ export const strategies: Strategy[] = [
     longDescription: 'AlphaMomentum is our flagship strategy that capitalizes on systematic momentum across multiple timeframes while implementing sophisticated volatility control mechanisms.',
     logicDescription: 'The strategy employs a multi-layered approach to momentum detection, analyzing price action across daily, weekly, and monthly timeframes to identify persistent trends.',
     marketApplication: 'Performs exceptionally well in trending markets with defensive mechanisms for whipsaws and sudden reversals.',
-    chartUrl: 'https://images.pexels.com/photos/7567434/pexels-photo-7567434.jpeg',
+    chartUrl: 'https://i.imgur.com/mxXpY95.png',
     metrics: generateMetrics(1)
   },
   {
@@ -30,18 +30,18 @@ export const strategies: Strategy[] = [
     longDescription: 'QuantumMean leverages quantum computing algorithms to identify optimal mean reversion points across multiple assets.',
     logicDescription: 'Utilizes quantum-inspired algorithms to process vast amounts of market data and identify statistical arbitrage opportunities.',
     marketApplication: 'Ideal for highly liquid markets with established statistical relationships.',
-    chartUrl: 'https://images.pexels.com/photos/7567440/pexels-photo-7567440.jpeg',
+    chartUrl: 'https://i.imgur.com/GBtWTkp.png',
     metrics: generateMetrics(2)
   },
   {
     id: 3,
-    name: 'NeuralVolatility',
+    name: 'Best Price Action Toolkit',
     category: 'volatility',
     shortDescription: 'Deep learning-based volatility prediction and trading',
     longDescription: 'Harnesses the power of neural networks to predict and capitalize on volatility patterns across markets.',
     logicDescription: 'Employs deep learning models trained on historical volatility patterns to predict future market movements.',
     marketApplication: 'Particularly effective in high-volatility environments and during market regime changes.',
-    chartUrl: 'https://images.pexels.com/photos/7567476/pexels-photo-7567476.jpeg',
+    chartUrl: 'https://i.imgur.com/GBtWTkp.png',
     metrics: generateMetrics(3)
   }
 ].concat(
@@ -76,12 +76,7 @@ export const strategies: Strategy[] = [
     longDescription: 'Sophisticated trading strategy leveraging cutting-edge AI and machine learning techniques.',
     logicDescription: 'Utilizes deep learning models and advanced statistical methods to identify trading opportunities.',
     marketApplication: 'Suitable for institutional-grade trading across multiple asset classes.',
-    chartUrl: [
-      'https://images.pexels.com/photos/7567434/pexels-photo-7567434.jpeg',
-      'https://images.pexels.com/photos/7567440/pexels-photo-7567440.jpeg',
-      'https://images.pexels.com/photos/7567476/pexels-photo-7567476.jpeg',
-      'https://images.pexels.com/photos/7567596/pexels-photo-7567596.jpeg'
-    ][Math.floor(Math.random() * 4)],
+    chartUrl: '',
     metrics: generateMetrics(i + 4)
   }))
 );

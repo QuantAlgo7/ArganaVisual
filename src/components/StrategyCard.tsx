@@ -1,4 +1,4 @@
-import { Maximize2, TrendingUp, Activity, Percent, BarChart4 } from 'lucide-react';
+import { Maximize2 } from 'lucide-react';
 import { useState } from 'react';
 import { Strategy } from '../types/strategy';
 
@@ -35,36 +35,16 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
       </div>
 
       {/* Strategy performance chart */}
-      <div 
-        className="w-full h-32 mb-6 overflow-hidden rounded-md bg-dark-light"
-        style={{ 
-          backgroundImage: `url(${strategy.chartUrl})`, 
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      ></div>
-
-      {/* Key metrics */}
-      <div className="mb-4">
-        <div className="flex flex-wrap">
-          <div className="metric">
-            <TrendingUp size={14} className="mr-1.5 text-accent" />
-            <span>Sharpe: {strategy.metrics.sharpe}</span>
-          </div>
-          <div className="metric">
-            <Activity size={14} className="mr-1.5 text-accent" />
-            <span>CAGR: {strategy.metrics.cagr}%</span>
-          </div>
-          <div className="metric">
-            <BarChart4 size={14} className="mr-1.5 text-accent" />
-            <span>Drawdown: {strategy.metrics.maxDrawdown}%</span>
-          </div>
-          <div className="metric">
-            <Percent size={14} className="mr-1.5 text-accent" />
-            <span>Win Rate: {strategy.metrics.winRate}%</span>
-          </div>
-        </div>
-      </div>
+      {strategy.chartUrl && (
+        <div 
+          className="w-full h-32 mb-6 overflow-hidden rounded-md bg-dark-light"
+          style={{ 
+            backgroundImage: `url(${strategy.chartUrl})`, 
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+      )}
 
       {expanded && (
         <div className="my-4">
