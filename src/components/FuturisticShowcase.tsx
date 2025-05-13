@@ -9,8 +9,20 @@ const showcaseImages = [
     caption: 'Quant Algo 1'
   },
   {
-    url: 'https://i.imgur.com/IXYrBtZ.png',
+    url: 'https://i.imgur.com/YAjzTd2.png',
     caption: 'Quant Algo 2'
+  },
+  {
+    url: 'https://i.imgur.com/rdAaaWQ.png',
+    caption: 'Correlation Toolkit Argana'
+  },
+  {
+    url: 'https://i.imgur.com/82kAXdJ.png',
+    caption: 'Asset management'
+  },
+  {
+    url: 'https://i.imgur.com/RL3wOZX.png',
+    caption: 'Argana Bridge Capital Indicators'
   }
 ];
 
@@ -53,7 +65,7 @@ const FuturisticShowcase = () => {
       <div ref={particleRef} className="particle-container"></div>
       
       {/* Screen Frame */}
-      <div className="absolute inset-0 max-w-6xl mx-auto my-16 px-4">
+      <div className="absolute inset-0 max-w-screen-xl mx-auto my-16 px-4">
         <div className="relative h-full border border-accent/20 rounded-lg backdrop-blur-sm">
           <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5"></div>
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent"></div>
@@ -73,7 +85,7 @@ const FuturisticShowcase = () => {
                 transition={{ duration: 1 }}
               >
                 <div 
-                  className="absolute inset-0 bg-cover bg-center rounded-lg"
+                  className="absolute inset-0 bg-contain bg-center bg-no-repeat rounded-lg"
                   style={{ backgroundImage: `url(${showcaseImages[currentIndex].url})` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-dark/10 to-dark/30 rounded-lg"></div>
