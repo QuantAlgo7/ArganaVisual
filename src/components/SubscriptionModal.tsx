@@ -18,43 +18,47 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
 
   const plans = [
     {
-      id: 'starter',
-      name: 'Starter',
-      price: '$199',
+      id: 'core',
+      name: 'Premuim Indicator Access',
+      price: '$39',
       period: '/month',
       features: [
-        'Access to 1 strategy',
-        'Weekly performance updates',
-        'Basic backtesting tools',
-        'Email support',
+        'Full access to our proprietary indicator suite',
+        'Mix smart indicators and receive a new custom one every month',
+        'Custom Alert',
+        'Community access',
+        '24/7 support & active toolkit updates',
       ],
     },
     {
-      id: 'pro',
-      name: 'Professional',
-      price: '$499',
+      id: 'strategy',
+      name: 'Premuim Strategy Access',
+      price: '$79',
       period: '/month',
       features: [
-        'Access to 3 strategies',
-        'Daily performance updates',
-        'Advanced backtesting tools',
-        'Priority email support',
-        'Strategy customization',
+        'Everything in Core Access',
+        'Full access to our portfolio of algorithmic trading strategies',
+        'Backtested models across multiple asset classes',
+        'Optimized for various market regimes',
+        'Custom Alert',
+        'Community access',
+        '24/7 support & active toolkit updates',
       ],
       recommended: true,
     },
     {
-      id: 'institutional',
-      name: 'Institutional',
-      price: '$1,999',
+      id: 'autonomous',
+      name: 'Fully Automated Bots',
+      price: '$149',
       period: '/month',
       features: [
-        'Access to all strategies',
-        'Real-time performance monitoring',
-        'Enterprise backtesting suite',
-        'Dedicated account manager',
-        'Custom strategy development',
-        'API access',
+        'Everything in Strategy Access',
+        'Access to fully autonomous trading systems (automated bots)',
+        'Execute trades 24/7 with AI-optimized logic — no manual input required',
+        'Plug-and-play architecture compatible with major broker platforms',
+        'Community access',
+        '24/7 support & active toolkit updates',
+        '🔹 **One new strategy. 100% yours. Every month.**', // Visually highlighted
       ],
     },
   ];
@@ -69,11 +73,9 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would process the subscription
     console.log('Submitting subscription for', strategy.name);
     console.log('Selected plan:', selectedPlan);
     console.log('Form data:', formData);
-    // Close modal after submission
     onClose();
   };
 
@@ -128,7 +130,9 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
                       <CheckCircle size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">{feature}</span>
+                      <span className={`text-sm ${feature.includes('One new strategy') ? 'text-accent font-bold' : ''}`}>
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
