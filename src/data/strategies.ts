@@ -1,6 +1,6 @@
 import { Strategy } from '../types/strategy';
 
-// Helper function to generate random metrics within reasonable ranges
+// Helper function to generate random metrics
 const generateMetrics = (base: number) => ({
   sharpe: Number((2 + Math.random() * 2).toFixed(2)),
   cagr: Number((12 + Math.random() * 15).toFixed(2)),
@@ -9,6 +9,57 @@ const generateMetrics = (base: number) => ({
   sortino: Number((2.5 + Math.random() * 2).toFixed(2)),
   alpha: Number((8 + Math.random() * 10).toFixed(2))
 });
+
+const strategyNames = [
+  'DeepArbitrage',
+  'TensorFlow',
+  'QuantumEdge',
+  'AlphaNet',
+  'Harmonic Quant',
+  'All Price Action in One',
+  'MomentumPro',
+  'StatArb Elite',
+  'VolMatrix',
+  'TrendMaster',
+  'QubitTrader',
+  'NeuralFlow',
+  'QuantumLeap',
+  'AlphaWave',
+  'DeepMomentum',
+  'MetaTrader',
+  'QuantumFlow',
+  'NeuralArb',
+  'AlphaQuant',
+  'WaveMaster',
+  'TensorQuant',
+  'DeepFlow'
+];
+
+// Remplace ces URLs avec tes vraies images si disponibles
+const strategyImages = [
+  'https://i.imgur.com/H9aXN0Y.png',
+  'https://i.imgur.com/zcrzsEI.png',
+  'https://i.imgur.com/7Rlg9LC.png',
+  'https://i.imgur.com/OATauk6.png',
+  'https://i.imgur.com/OPz5BQt.png',
+  'https://i.imgur.com/fSbeGfI.png',
+  'https://i.imgur.com/G7.png',
+  'https://i.imgur.com/H8.png',
+  'https://i.imgur.com/I9.png',
+  'https://i.imgur.com/J10.png',
+  'https://i.imgur.com/K11.png',
+  'https://i.imgur.com/L12.png',
+  'https://i.imgur.com/M13.png',
+  'https://i.imgur.com/N14.png',
+  'https://i.imgur.com/O15.png',
+  'https://i.imgur.com/P16.png',
+  'https://i.imgur.com/Q17.png',
+  'https://i.imgur.com/R18.png',
+  'https://i.imgur.com/S19.png',
+  'https://i.imgur.com/T20.png',
+  'https://i.imgur.com/U21.png',
+  'https://i.imgur.com/V22.png'
+];
 
 export const strategies: Strategy[] = [
   {
@@ -43,40 +94,17 @@ export const strategies: Strategy[] = [
     marketApplication: 'Particularly effective in high-volatility environments and during market regime changes.',
     chartUrl: 'https://i.imgur.com/NvEtjh5.png',
     metrics: generateMetrics(3)
-  }
-].concat(
-  Array.from({ length: 22 }, (_, i) => ({
+  },
+  // Génère les 22 autres dynamiquement
+  ...strategyNames.map((name, i) => ({
     id: i + 4,
-    name: [
-      'DeepArbitrage',
-      'TensorFlow',
-      'QuantumEdge',
-      'AlphaNet',
-      'NeuralQuant',
-      'WaveRider',
-      'MomentumPro',
-      'StatArb Elite',
-      'VolMatrix',
-      'TrendMaster',
-      'QubitTrader',
-      'NeuralFlow',
-      'QuantumLeap',
-      'AlphaWave',
-      'DeepMomentum',
-      'MetaTrader',
-      'QuantumFlow',
-      'NeuralArb',
-      'AlphaQuant',
-      'WaveMaster',
-      'TensorQuant',
-      'DeepFlow'
-    ][i],
+    name,
     category: ['momentum', 'mean-reversion', 'volatility', 'arbitrage'][Math.floor(Math.random() * 4)] as Strategy['category'],
     shortDescription: `Advanced ${['momentum', 'mean-reversion', 'volatility', 'arbitrage'][Math.floor(Math.random() * 4)]} strategy with neural network optimization`,
     longDescription: 'Sophisticated trading strategy leveraging cutting-edge AI and machine learning techniques.',
     logicDescription: 'Utilizes deep learning models and advanced statistical methods to identify trading opportunities.',
     marketApplication: 'Suitable for institutional-grade trading across multiple asset classes.',
-    chartUrl: i === 0 ? 'https://i.imgur.com/H9aXN0Y.png' : i === 1 ? 'https://i.imgur.com/zcrzsEI.png' : i === 2 ? 'https://i.imgur.com/7Rlg9LC.png' : '',
+    chartUrl: strategyImages[i],
     metrics: generateMetrics(i + 4)
   }))
-);
+];

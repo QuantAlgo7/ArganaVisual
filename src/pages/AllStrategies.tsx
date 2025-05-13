@@ -11,7 +11,6 @@ const riskCategories = [
   { id: 'low', name: 'Low Risk', icon: BarChart2 },
 ];
 
-// Assign risk levels to strategies based on metrics
 const getStrategyRiskLevel = (strategy: any) => {
   const riskScore = (strategy.metrics.maxDrawdown * 0.4) + 
                    (100 - strategy.metrics.winRate) * 0.3 + 
@@ -28,7 +27,6 @@ const AllStrategies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
 
-  // Assign risk levels to strategies
   const strategiesWithRisk = strategies.map(strategy => ({
     ...strategy,
     riskLevel: getStrategyRiskLevel(strategy)
@@ -57,7 +55,6 @@ const AllStrategies = () => {
 
   return (
     <div className="min-h-screen bg-dark overflow-hidden">
-      {/* Neural Network Background */}
       <div className="fixed inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 opacity-30" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,245,196,0.15),transparent_50%)]" />
@@ -80,10 +77,8 @@ const AllStrategies = () => {
           </p>
         </motion.div>
 
-        {/* Filters */}
         <div className="max-w-6xl mx-auto mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-            {/* Risk Category Filters */}
             <div className="flex flex-wrap gap-3">
               {riskCategories.map(category => (
                 <button
@@ -101,7 +96,6 @@ const AllStrategies = () => {
               ))}
             </div>
 
-            {/* Search */}
             <div className="relative w-full md:w-72">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-accent" size={20} />
               <input
@@ -115,28 +109,31 @@ const AllStrategies = () => {
           </div>
         </div>
 
-        {/* Strategy Grid */}
         <motion.div 
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filteredStrategies.map((strategy) => (
             <motion.div
               key={strategy.id}
               variants={item}
-              className="card group cursor-pointer hover:border-accent transition-all duration-300 backdrop-blur-sm"
+              className="card group cursor-pointer hover:border-accent transition-all duration-300 backdrop-blur-sm overflow-hidden"
               onClick={() => {
                 setSelectedStrategy(strategy.id);
                 setShowModal(true);
               }}
             >
-              <div className="relative mb-6">
-                <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="flex items-center justify-between">
-                  <Brain className="text-accent w-12 h-12" />
-                  <span className={`text-xs px-3 py-1 rounded-full ${
+              <div className="relative h-48 -mx-6 -mt-6 mb-6 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark z-10" />
+                <img 
+                  src={strategy.chartUrl} 
+                  alt={strategy.name}
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute top-4 right-4 z-20">
+                  <span className={`text-xs px-3 py-1 rounded-full backdrop-blur-sm ${
                     strategy.riskLevel === 'high' ? 'bg-red-500/10 text-red-400' :
                     strategy.riskLevel === 'medium' ? 'bg-yellow-500/10 text-yellow-400' :
                     'bg-green-500/10 text-green-400'
@@ -146,7 +143,8 @@ const AllStrategies = () => {
                 </div>
               </div>
 
-              <h3 className="text-xl font-display font-semibold text-accent mb-2">
+              <h3 className="text-xl font-display font-semibold text-accent mb-2 flex items-center">
+                <Brain className="w-5 h-5 mr-2" />
                 {strategy.name}
               </h3>
               
@@ -174,6 +172,7 @@ const AllStrategies = () => {
               </div>
 
               <button className="btn-accent w-full group-hover:bg-accent group-hover:text-dark">
+                <Zap size={16} className="mr-2" />
                 Learn More
               </button>
             </motion.div>
@@ -181,7 +180,6 @@ const AllStrategies = () => {
         </motion.div>
       </div>
 
-      {/* Subscription Modal */}
       {showModal && (
         <SubscriptionModal 
           onClose={() => setShowModal(false)} 
