@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MessageSquare, Send, DiscIcon as BrandDiscord, Brackets as BrandWhatsapp, GitBranch as BrandTelegram, Instagram, GitBranch as BrandTiktok, Twitter } from 'lucide-react';
+import { Send, DiscIcon as BrandDiscord, Youtube, GitBranch as BrandTelegram, Instagram, GitBranch as BrandTiktok, Twitter } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -54,12 +54,12 @@ ${formData.message}
   };
 
   const socialLinks = [
-    { icon: BrandDiscord, href: 'https://discord.gg/your-discord', label: 'Discord' },
-    { icon: BrandWhatsapp, href: 'https://wa.me/your-number', label: 'WhatsApp' },
-    { icon: BrandTelegram, href: 'https://t.me/your-telegram', label: 'Telegram' },
-    { icon: Instagram, href: 'https://instagram.com/your-instagram', label: 'Instagram' },
-    { icon: BrandTiktok, href: 'https://tiktok.com/@your-tiktok', label: 'TikTok' },
-    { icon: Twitter, href: 'https://twitter.com/your-twitter', label: 'Twitter' }
+    { icon: BrandDiscord, href: 'https://discord.gg/E4QnRWau', label: 'Discord' },
+    { icon: Youtube, href: 'https://youtube.com/@ArganaBridgeCapital', label: 'YouTube' },
+    { icon: BrandTelegram, href: 'https://t.me/Arganabridgecapital', label: 'Telegram' },
+    { icon: Instagram, href: 'https://www.instagram.com/argana.bridge.capital', label: 'Instagram' },
+    { icon: BrandTiktok, href: 'tiktok.com/@arganabridgecapital', label: 'TikTok' },
+    { icon: Twitter, href: 'https://x.com/ArganaBC', label: 'Twitter' }
   ];
 
   return (
@@ -79,23 +79,8 @@ ${formData.message}
             {/* Contact Info */}
             <div>
               <div className="card">
-                <div className="flex items-start">
-                  <div className="bg-dark-lighter p-3 rounded-md mr-4">
-                    <MessageSquare className="text-accent" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Schedule a Call</h3>
-                    <p className="text-light-dark mb-4">
-                      Book a consultation with our strategy experts to discuss your investment needs and learn how our algorithms can help you achieve your financial goals.
-                    </p>
-                    <button className="btn-accent">
-                      Schedule Consultation
-                    </button>
-                  </div>
-                </div>
-
                 {/* Social Media Links */}
-                <div className="mt-8 pt-8 border-t border-dark-lighter">
+                <div>
                   <h3 className="font-semibold text-lg mb-4">Connect With Us</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {socialLinks.map((social) => (
