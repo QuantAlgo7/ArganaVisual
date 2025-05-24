@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, MessageSquare, Send } from 'lucide-react';
+import { MessageSquare, Send, DiscIcon as BrandDiscord, Brackets as BrandWhatsapp, GitBranch as BrandTelegram, Instagram, GitBranch as BrandTiktok, Twitter } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,10 +21,26 @@ const Contact = () => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would process the contact form
-    console.log('Submitting contact form:', formData);
+    
+    // Construct email body
+    const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject}
+
+Message:
+${formData.message}
+    `;
+    
+    // Create mailto link
+    const mailtoLink = `mailto:arganabridgecapital@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
     // Show success message
     setSubmitted(true);
+    
     // Reset after 5 seconds
     setTimeout(() => {
       setSubmitted(false);
@@ -36,6 +52,15 @@ const Contact = () => {
       });
     }, 5000);
   };
+
+  const socialLinks = [
+    { icon: BrandDiscord, href: 'https://discord.gg/your-discord', label: 'Discord' },
+    { icon: BrandWhatsapp, href: 'https://wa.me/your-number', label: 'WhatsApp' },
+    { icon: BrandTelegram, href: 'https://t.me/your-telegram', label: 'Telegram' },
+    { icon: Instagram, href: 'https://instagram.com/your-instagram', label: 'Instagram' },
+    { icon: BrandTiktok, href: 'https://tiktok.com/@your-tiktok', label: 'TikTok' },
+    { icon: Twitter, href: 'https://twitter.com/your-twitter', label: 'Twitter' }
+  ];
 
   return (
     <section id="contact" className="section bg-dark relative">
@@ -53,23 +78,6 @@ const Contact = () => {
           <div className="grid md:grid-cols-2 gap-10 items-start">
             {/* Contact Info */}
             <div>
-              <div className="card mb-6">
-                <div className="flex items-start">
-                  <div className="bg-dark-lighter p-3 rounded-md mr-4">
-                    <Mail className="text-accent" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">Email Us</h3>
-                    <p className="text-light-dark mb-2">
-                      Our team will respond within 24 hours
-                    </p>
-                    <a href="mailto:arganabridgecapital@gmail.com" className="text-accent hover:underline">
-                      arganabridgecapital@gmail.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
               <div className="card">
                 <div className="flex items-start">
                   <div className="bg-dark-lighter p-3 rounded-md mr-4">
@@ -83,6 +91,27 @@ const Contact = () => {
                     <button className="btn-accent">
                       Schedule Consultation
                     </button>
+                  </div>
+                </div>
+
+                {/* Social Media Links */}
+                <div className="mt-8 pt-8 border-t border-dark-lighter">
+                  <h3 className="font-semibold text-lg mb-4">Connect With Us</h3>
+                  <div className="grid grid-cols-3 gap-4">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center p-3 bg-dark-lighter rounded-lg hover:bg-dark-light transition-colors group"
+                      >
+                        <social.icon className="w-6 h-6 text-accent group-hover:scale-110 transition-transform" />
+                        <span className="text-xs mt-2 text-light-dark group-hover:text-accent transition-colors">
+                          {social.label}
+                        </span>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
