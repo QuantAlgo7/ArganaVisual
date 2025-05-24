@@ -3,8 +3,9 @@ export interface Strategy {
   name: string;
   shortDescription: string;
   longDescription: string;
-  logicDescription: string;
+  indicatorArchitecture: string; // Changed from logicDescription
   marketApplication: string;
+  timeframes: string[];
   chartUrl: string;
   category: 'momentum' | 'mean-reversion' | 'volatility' | 'arbitrage';
   metrics: {
