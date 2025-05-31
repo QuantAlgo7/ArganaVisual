@@ -9,6 +9,7 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AllStrategies from './pages/AllStrategies';
+import ChatWidget from './components/ChatWidget';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/strategies" element={<AllStrategies />} />
         </Routes>
         <Footer />
+        <ChatWidget />
       </div>
     </Router>
   );

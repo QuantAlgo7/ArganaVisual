@@ -50,7 +50,7 @@ const Navbar = () => {
           {/* Desktop menu */}
           <nav className="hidden md:flex gap-8">
             <NavLink href="#home" label="Home" />
-            <NavLink href="#chart" label="Live Performance" />
+            <NavLink href="#chart" label="Our Vision" />
             <NavLink href="#strategies" label="Strategies" />
             <NavLink href="#testimonials" label="Testimonials" />
             <NavLink href="#contact" label="Contact" />
@@ -60,7 +60,7 @@ const Navbar = () => {
             className="hidden md:block btn-accent"
             onClick={() => setShowSubscriptionModal(true)}
           >
-            Explore Plans
+            Get Access
           </button>
 
           {/* Mobile menu button */}
@@ -78,7 +78,7 @@ const Navbar = () => {
           <div className="md:hidden bg-dark-light/95 backdrop-blur-lg py-4">
             <nav className="container mx-auto px-4 flex flex-col space-y-4">
               <NavLink href="#home" label="Home" />
-              <NavLink href="#chart" label="Live Performance" />
+              <NavLink href="#chart" label="Our Vision" />
               <NavLink href="#strategies" label="Strategies" />
               <NavLink href="#testimonials" label="Testimonials" />
               <NavLink href="#contact" label="Contact" />
@@ -89,7 +89,7 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                 }}
               >
-                Explore Plans
+                Get Access
               </button>
             </nav>
           </div>
