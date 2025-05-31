@@ -9,12 +9,6 @@ interface SubscriptionModalProps {
 
 const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    message: '',
-  });
 
   const plans = [
     {
@@ -58,25 +52,14 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
         'Plug-and-play architecture compatible with major broker platforms',
         'Community access',
         '24/7 support & active toolkit updates',
-        '🔹 **One new strategy. 100% yours. Every month.**', // Visually highlighted
+        '🔹 **One new strategy. 100% yours. Every month.**',
       ],
     },
   ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting subscription for', strategy.name);
-    console.log('Selected plan:', selectedPlan);
-    console.log('Form data:', formData);
-    onClose();
+    window.location.href = 'https://t.me/Arganabridgecapital';
   };
 
   const stopPropagation = (e: React.MouseEvent) => {
@@ -151,87 +134,35 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
           </div>
           
           <div className="border-t border-dark-lighter pt-6">
-            <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
+            <h3 className="text-xl font-semibold mb-6">Payment Information</h3>
             
-            <form onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-2">
-                    Company (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
-                </div>
-                
-                <div className="md:col-span-2">
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Additional Information
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-2 bg-dark-lighter border border-dark-light rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
-                  />
-                </div>
+            <div className="space-y-4">
+              <div className="p-4 bg-dark-lighter rounded-lg">
+                <p className="text-sm font-medium mb-2">USDT TRON</p>
+                <p className="font-mono text-accent break-all">TDT1F3YH23jKgEpk2wipZW8HyFwaoZkvAg</p>
               </div>
               
-              <div className="flex flex-col sm:flex-row justify-end gap-4">
-                <button 
-                  type="button" 
-                  onClick={onClose}
-                  className="btn bg-dark-lighter hover:bg-dark-light text-light"
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit"
-                  className="btn-primary"
-                  disabled={!selectedPlan}
-                >
-                  <DollarSign size={18} className="mr-2" />
-                  Subscribe Now
-                </button>
+              <div className="p-4 bg-dark-lighter rounded-lg">
+                <p className="text-sm font-medium mb-2">USDT SOLANA</p>
+                <p className="font-mono text-accent break-all">9Jhpc818unJ7yAXXbdoz6ufFvsNDPg5FcQVJ6Q3LLoaY</p>
               </div>
-            </form>
+              
+              <div className="p-4 bg-dark-lighter rounded-lg">
+                <p className="text-sm font-medium mb-2">USDT ETHEREUM</p>
+                <p className="font-mono text-accent break-all">0x7bE8581d7391Dc67095Dc0f6De129e7E5e7Fc6bE</p>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-6">
+              <button 
+                onClick={handleSubmit}
+                className="btn-primary"
+                disabled={!selectedPlan}
+              >
+                <DollarSign size={18} className="mr-2" />
+                Subscribe Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
