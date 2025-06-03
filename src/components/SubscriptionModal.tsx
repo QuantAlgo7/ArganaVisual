@@ -1,5 +1,5 @@
-import { X, CheckCircle, DollarSign } from 'lucide-react';
 import { useState } from 'react';
+import { X, CheckCircle, DollarSign, CreditCard, Wallet } from 'lucide-react';
 import { Strategy } from '../types/strategy';
 
 interface SubscriptionModalProps {
@@ -9,6 +9,7 @@ interface SubscriptionModalProps {
 
 const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
   const plans = [
     {
@@ -43,7 +44,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     {
       id: 'autonomous',
       name: 'Fully Automated Bots',
-      price: '$149',
+      price: '$99',
       period: '/month',
       features: [
         'Everything in Strategy Access',
@@ -54,12 +55,19 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
         '24/7 support & active toolkit updates',
         '🔹 **One new strategy. 100% yours. Every month.**',
       ],
+      promotion: {
+        label: 'Limited Time Offer',
+        originalPrice: '$149/month'
+      }
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.location.href = 'https://t.me/Arganabridgecapital';
+  const handlePaymentMethodSelect = (method: 'crypto' | 'card') => {
+    if (method === 'card') {
+      window.location.href = 'https://arganabridgecapital.gumroad.com/l/eijwo?_gl=1*qb9rlx*_ga*MTUxNDU5NDU1OC4xNzQ4NzE4OTg5*_ga_6LJN6D94N6*czE3NDg5NTEwMTAkbzMkZzEkdDE3NDg5NTU3OTMkajQxJGwwJGgw';
+    } else {
+      setShowPaymentOptions(false); // Return to crypto addresses
+    }
   };
 
   const stopPropagation = (e: React.MouseEvent) => {
@@ -86,84 +94,131 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
         </div>
 
         <div className="p-6">
-          <h3 className="text-xl font-semibold mb-6">Select a Subscription Plan</h3>
-          
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            {plans.map((plan) => (
-              <div 
-                key={plan.id}
-                className={`card relative cursor-pointer transition-all duration-300 ${
-                  selectedPlan === plan.id ? 'border-accent' : ''
-                } ${plan.recommended ? 'border-primary md:-mt-4 md:mb-4' : ''}`}
-                onClick={() => setSelectedPlan(plan.id)}
-              >
-                {plan.recommended && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary px-3 py-1 rounded-full text-xs font-semibold">
-                    Recommended
-                  </div>
-                )}
-                
-                <h4 className="text-lg font-display font-semibold mb-2">{plan.name}</h4>
-                <div className="mb-4">
-                  <span className="text-2xl font-display font-bold">{plan.price}</span>
-                  <span className="text-light-dark text-sm">{plan.period}</span>
-                </div>
-                
-                <ul className="space-y-2 mb-4">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckCircle size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
-                      <span className={`text-sm ${feature.includes('One new strategy') ? 'text-accent font-bold' : ''}`}>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <button 
-                  className={`w-full py-2 rounded transition-colors ${
-                    selectedPlan === plan.id 
-                      ? 'bg-accent text-dark font-medium' 
-                      : 'bg-dark-lighter text-light hover:bg-dark-light'
-                  }`}
-                >
-                  {selectedPlan === plan.id ? 'Selected' : 'Select Plan'}
-                </button>
+          {/* Promotional Banner */}
+          <div className="mb-8 relative overflow-hidden rounded-lg bg-gradient-to-r from-accent/20 via-accent/10 to-accent/20 border border-accent/30">
+            <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+            <div className="relative p-6 text-center">
+              <div className="animate-pulse">
+                <span className="text-accent text-2xl font-display font-bold">🔥 LIMITED OFFER: Get Lifetime Access for Only $99! 🔥</span>
               </div>
-            ))}
-          </div>
-          
-          <div className="border-t border-dark-lighter pt-6">
-            <h3 className="text-xl font-semibold mb-6">Payment Information</h3>
-            
-            <div className="space-y-4">
-              <div className="p-4 bg-dark-lighter rounded-lg">
-                <p className="text-sm font-medium mb-2">USDT TRON</p>
-                <p className="font-mono text-accent break-all">TDT1F3YH23jKgEpk2wipZW8HyFwaoZkvAg</p>
-              </div>
-              
-              <div className="p-4 bg-dark-lighter rounded-lg">
-                <p className="text-sm font-medium mb-2">USDT SOLANA</p>
-                <p className="font-mono text-accent break-all">9Jhpc818unJ7yAXXbdoz6ufFvsNDPg5FcQVJ6Q3LLoaY</p>
-              </div>
-              
-              <div className="p-4 bg-dark-lighter rounded-lg">
-                <p className="text-sm font-medium mb-2">USDT ETHEREUM</p>
-                <p className="font-mono text-accent break-all">0x7bE8581d7391Dc67095Dc0f6De129e7E5e7Fc6bE</p>
-              </div>
+              <p className="text-light-dark mt-2">One-time payment — no recurring fees!</p>
             </div>
-            
-            <div className="flex justify-end mt-6">
+          </div>
+
+          {!showPaymentOptions ? (
+            <>
+              <h3 className="text-xl font-semibold mb-6">Select a Subscription Plan</h3>
+              
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {plans.map((plan) => (
+                  <div 
+                    key={plan.id}
+                    className={`card relative cursor-pointer transition-all duration-300 ${
+                      selectedPlan === plan.id ? 'border-accent' : ''
+                    } ${plan.recommended ? 'border-primary md:-mt-4 md:mb-4' : ''}`}
+                    onClick={() => setSelectedPlan(plan.id)}
+                  >
+                    {plan.recommended && (
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary px-3 py-1 rounded-full text-xs font-semibold">
+                        Recommended
+                      </div>
+                    )}
+                    {plan.promotion && (
+                      <div className="absolute -top-3 right-4 bg-accent text-dark px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
+                        {plan.promotion.label}
+                      </div>
+                    )}
+                    
+                    <h4 className="text-lg font-display font-semibold mb-2">{plan.name}</h4>
+                    <div className="mb-4">
+                      {plan.promotion ? (
+                        <div>
+                          <span className="text-2xl font-display font-bold">{plan.price}</span>
+                          <span className="text-light-dark text-sm">{plan.period}</span>
+                          <div className="mt-1">
+                            <span className="text-sm text-light-dark line-through mr-2">{plan.promotion.originalPrice}</span>
+                            <span className="text-xs text-accent">Save 33%</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <span className="text-2xl font-display font-bold">{plan.price}</span>
+                          <span className="text-light-dark text-sm">{plan.period}</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <ul className="space-y-2 mb-4">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <CheckCircle size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
+                          <span className={`text-sm ${feature.includes('One new strategy') ? 'text-accent font-bold' : ''}`}>
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <button 
+                      className={`w-full py-2 rounded transition-colors ${
+                        selectedPlan === plan.id 
+                          ? 'bg-accent text-dark font-medium' 
+                          : 'bg-dark-lighter text-light hover:bg-dark-light'
+                      }`}
+                    >
+                      {selectedPlan === plan.id ? 'Selected' : 'Select Plan'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+              
               <button 
-                onClick={handleSubmit}
-                className="btn-primary"
+                onClick={() => selectedPlan && setShowPaymentOptions(true)}
+                className="btn-primary w-full"
                 disabled={!selectedPlan}
               >
                 <DollarSign size={18} className="mr-2" />
-                Subscribe Now
+                Continue to Payment
+              </button>
+            </>
+          ) : (
+            <div className="py-4">
+              <h3 className="text-xl font-semibold mb-6">Select Payment Method</h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div 
+                  className="card cursor-pointer hover:border-accent"
+                  onClick={() => handlePaymentMethodSelect('crypto')}
+                >
+                  <Wallet size={24} className="text-accent mb-4" />
+                  <h4 className="text-lg font-semibold mb-2">Pay with Crypto</h4>
+                  <p className="text-light-dark text-sm mb-4">
+                    Pay using USDT on TRON, SOLANA, or ETHEREUM network
+                  </p>
+                  <div className="text-xs text-accent">Recommended</div>
+                </div>
+
+                <div 
+                  className="card cursor-pointer hover:border-accent"
+                  onClick={() => handlePaymentMethodSelect('card')}
+                >
+                  <CreditCard size={24} className="text-accent mb-4" />
+                  <h4 className="text-lg font-semibold mb-2">Card / PayPal</h4>
+                  <p className="text-light-dark text-sm mb-4">
+                    Secure payment via credit card or PayPal
+                  </p>
+                  <div className="text-xs text-accent">Processed by Gumroad</div>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setShowPaymentOptions(false)}
+                className="btn bg-dark-lighter hover:bg-dark-light text-light w-full mt-6"
+              >
+                Back to Plans
               </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
