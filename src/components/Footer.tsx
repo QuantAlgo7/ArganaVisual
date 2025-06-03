@@ -1,4 +1,4 @@
-import { TrendingUp, Github, Twitter, Linkedin } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -15,17 +15,6 @@ const Footer = () => {
             <p className="text-light-dark mb-4 max-w-md">
               Argana Bridge Capital specializes in algorithmic trading strategies powered by neural network intelligence, delivering institutional-grade performance for investors.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-light-dark hover:text-accent transition-colors" aria-label="Github">
-                <Github size={20} />
-              </a>
-              <a href="#" className="text-light-dark hover:text-accent transition-colors" aria-label="Twitter">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-light-dark hover:text-accent transition-colors" aria-label="LinkedIn">
-                <Linkedin size={20} />
-              </a>
-            </div>
           </div>
           
           <div>
