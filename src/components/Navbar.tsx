@@ -27,13 +27,11 @@ const Navbar = () => {
 
   const handleNavigation = (path: string) => {
     if (location.pathname === '/' && path.startsWith('#')) {
-      // Handle smooth scroll for home page sections
       const element = document.querySelector(path);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (path.startsWith('#')) {
-      // Navigate to home page first, then scroll to section
       navigate('/');
       setTimeout(() => {
         const element = document.querySelector(path);
@@ -42,7 +40,6 @@ const Navbar = () => {
         }
       }, 100);
     } else {
-      // Regular page navigation
       navigate(path);
       window.scrollTo(0, 0);
     }
@@ -68,17 +65,17 @@ const Navbar = () => {
     <>
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-dark-light/90 backdrop-blur-lg py-3' : 'bg-transparent py-6'
+          scrolled ? 'bg-dark-light/90 backdrop-blur-lg py-3' : 'bg-transparent py-4'
         }`}
       >
-        <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+        <div className="container mx-auto px-4 flex items-center justify-between">
           <button 
             onClick={() => handleNavigation('/')} 
             className="flex items-center"
           >
-            <TrendingUp className="text-accent mr-2" size={28} />
-            <span className="font-display text-xl font-semibold tracking-wide">
-              <span className="text-accent">A</span>rgana <span className="text-accent">B</span>ridge <span className="text-accent">C</span>apital
+            <TrendingUp className="text-accent mr-2" size={24} />
+            <span className="font-display text-lg md:text-xl font-semibold tracking-wide">
+              <span className="text-accent">A</span>rgana <span className="hidden sm:inline"><span className="text-accent">B</span>ridge <span className="text-accent">C</span>apital</span>
             </span>
           </button>
 
@@ -91,16 +88,18 @@ const Navbar = () => {
             <NavLink href="#contact" label="Contact" />
           </nav>
 
-          <button 
-            className="hidden md:block btn-accent"
-            onClick={() => setShowSubscriptionModal(true)}
-          >
-            Get Access
-          </button>
+          <div className="hidden md:flex items-center gap-4">
+            <button 
+              className="btn-accent"
+              onClick={() => setShowSubscriptionModal(true)}
+            >
+              Get Access
+            </button>
+          </div>
 
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-light hover:text-accent transition-colors"
+            className="md:hidden text-light hover:text-accent transition-colors p-2"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -110,8 +109,8 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-dark-light/95 backdrop-blur-lg py-4">
-            <nav className="container mx-auto px-4 flex flex-col space-y-4">
+          <div className="md:hidden bg-dark-light/95 backdrop-blur-lg">
+            <nav className="container mx-auto px-4 py-6 flex flex-col space-y-4">
               <NavLink href="#home" label="Home" />
               <NavLink href="#chart" label="Our Vision" />
               <NavLink href="/strategies" label="Strategies" />
@@ -131,7 +130,6 @@ const Navbar = () => {
         )}
       </header>
 
-      {/* Subscription Modal */}
       {showSubscriptionModal && (
         <SubscriptionModal 
           onClose={() => setShowSubscriptionModal(false)}

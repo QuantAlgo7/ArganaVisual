@@ -66,7 +66,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     if (method === 'card') {
       window.location.href = 'https://arganabridgecapital.gumroad.com/l/eijwo?_gl=1*qb9rlx*_ga*MTUxNDU5NDU1OC4xNzQ4NzE4OTg5*_ga_6LJN6D94N6*czE3NDg5NTEwMTAkbzMkZzEkdDE3NDg5NTU3OTMkajQxJGwwJGgw';
     } else {
-      setShowPaymentOptions(false); // Return to crypto addresses
+      setShowPaymentOptions(false);
     }
   };
 
@@ -80,8 +80,8 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
         className="bg-dark-card border border-dark-lighter rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
         onClick={stopPropagation}
       >
-        <div className="sticky top-0 z-10 bg-dark-card flex justify-between items-center border-b border-dark-lighter p-6">
-          <h2 className="text-2xl font-display font-semibold">
+        <div className="sticky top-0 z-10 bg-dark-card flex justify-between items-center border-b border-dark-lighter p-4 sm:p-6">
+          <h2 className="text-xl sm:text-2xl font-display font-semibold">
             Subscribe to <span className="text-accent">{strategy.name}</span>
           </h2>
           <button 
@@ -93,13 +93,12 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
           </button>
         </div>
 
-        <div className="p-6">
-          {/* Promotional Banner */}
+        <div className="p-4 sm:p-6">
           <div className="mb-8 relative overflow-hidden rounded-lg bg-gradient-to-r from-accent/20 via-accent/10 to-accent/20 border border-accent/30">
             <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-            <div className="relative p-6 text-center">
+            <div className="relative p-4 sm:p-6 text-center">
               <div className="animate-pulse">
-                <span className="text-accent text-2xl font-display font-bold">🔥 LIMITED OFFER: Get Lifetime Access for Only $99! 🔥</span>
+                <span className="text-accent text-lg sm:text-2xl font-display font-bold">🔥 LIMITED OFFER: Get Lifetime Access for Only $99! 🔥</span>
               </div>
               <p className="text-light-dark mt-2">One-time payment — no recurring fees!</p>
             </div>
@@ -109,13 +108,13 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
             <>
               <h3 className="text-xl font-semibold mb-6">Select a Subscription Plan</h3>
               
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 {plans.map((plan) => (
                   <div 
                     key={plan.id}
                     className={`card relative cursor-pointer transition-all duration-300 ${
                       selectedPlan === plan.id ? 'border-accent' : ''
-                    } ${plan.recommended ? 'border-primary md:-mt-4 md:mb-4' : ''}`}
+                    } ${plan.recommended ? 'border-primary sm:-mt-4 sm:mb-4' : ''}`}
                     onClick={() => setSelectedPlan(plan.id)}
                   >
                     {plan.recommended && (
@@ -185,7 +184,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
             <div className="py-4">
               <h3 className="text-xl font-semibold mb-6">Select Payment Method</h3>
               
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div 
                   className="card cursor-pointer hover:border-accent"
                   onClick={() => handlePaymentMethodSelect('crypto')}

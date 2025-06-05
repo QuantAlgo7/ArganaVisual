@@ -52,6 +52,7 @@ const chartConfigs = [
 const Hero = () => {
   const particleRef = useRef<HTMLDivElement>(null);
   const [activeChart, setActiveChart] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     if (!particleRef.current) return;
@@ -79,14 +80,14 @@ const Hero = () => {
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 px-4"
     >
       <div ref={particleRef} className="particle-container"></div>
       
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+      <div className="container mx-auto relative z-10">
+        <div className="max-w-4xl mx-auto text-center mb-12">
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -98,7 +99,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-xl md:text-2xl text-light-dark mb-10 max-w-2xl mx-auto"
+            className="text-lg sm:text-xl md:text-2xl text-light-dark mb-10 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -107,44 +108,49 @@ const Hero = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
-          {chartConfigs.map((config, index) => (
-            <motion.div
-              key={config.title}
-              className={`card relative overflow-hidden transition-all duration-500 ${
-                index === activeChart ? 'md:col-span-2 lg:col-span-1 border-accent' : ''
-              }`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold flex items-center">
-                  <config.icon className="w-4 h-4 mr-2" style={{ color: config.color }} />
-                  {config.title}
-                </h3>
-                <div className="flex items-center space-x-1">
-                  <Zap className="w-3 h-3 text-accent animate-pulse" />
-                  <span className="text-xs text-accent">LIVE</span>
+        <div 
+          ref={scrollRef}
+          className="overflow-x-auto pb-4 mb-12 -mx-4 px-4"
+        >
+          <div className="flex gap-4 min-w-max">
+            {chartConfigs.map((config, index) => (
+              <motion.div
+                key={config.title}
+                className={`card relative overflow-hidden transition-all duration-500 w-[280px] ${
+                  index === activeChart ? 'border-accent' : ''
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold flex items-center">
+                    <config.icon className="w-4 h-4 mr-2" style={{ color: config.color }} />
+                    {config.title}
+                  </h3>
+                  <div className="flex items-center space-x-1">
+                    <Zap className="w-3 h-3 text-accent animate-pulse" />
+                    <span className="text-xs text-accent">LIVE</span>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="h-24 relative">
-                <MiniChart 
-                  data={config.data} 
-                  color={config.color}
-                  isActive={index === activeChart}
-                />
-              </div>
+                
+                <div className="h-24 relative">
+                  <MiniChart 
+                    data={config.data} 
+                    color={config.color}
+                    isActive={index === activeChart}
+                  />
+                </div>
 
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xs text-light-dark">{config.metrics.label}</span>
-                <span className="text-sm font-mono font-semibold" style={{ color: config.color }}>
-                  {config.metrics.value}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-xs text-light-dark">{config.metrics.label}</span>
+                  <span className="text-sm font-mono font-semibold" style={{ color: config.color }}>
+                    {config.metrics.value}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         <motion.div 
