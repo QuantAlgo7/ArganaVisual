@@ -51,6 +51,11 @@ const StrategyDashboard = () => {
     setShowModal(false);
   };
 
+  const handleViewAllStrategies = () => {
+    navigate('/strategies');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section id="strategies" className="section bg-dark relative">
       <div className="container mx-auto relative z-10">
@@ -78,7 +83,7 @@ const StrategyDashboard = () => {
         <div className="mt-16 text-center">
           <button 
             className="btn-primary"
-            onClick={() => navigate('/strategies')}
+            onClick={handleViewAllStrategies}
           >
             <DollarSign size={18} className="mr-2" />
             View All Trading Strategies

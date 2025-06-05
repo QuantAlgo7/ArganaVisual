@@ -17,8 +17,8 @@ const showcaseImages = [
     caption: 'Correlation Toolkit Argana'
   },
   {
-    url: 'https://i.imgur.com/82kAXdJ.png',
-    caption: 'Asset management'
+    url: 'https://i.imgur.com/ysld3YX.png',
+    caption: 'Quant algo 3'
   },
   {
     url: 'https://i.imgur.com/RL3wOZX.png',
