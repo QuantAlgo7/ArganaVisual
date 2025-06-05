@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { X, CheckCircle, DollarSign, CreditCard, Wallet } from 'lucide-react';
+import { X, MessageCircle, CreditCard, Wallet, Copy, Check, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Strategy } from '../types/strategy';
 
 interface SubscriptionModalProps {
@@ -7,9 +8,17 @@ interface SubscriptionModalProps {
   strategy: Strategy;
 }
 
+const walletAddresses = {
+  trc20: 'TDT1F3YH23jKgEpk2wipZW8HyFwaoZkvAg',
+  solana: '9Jhpc818unJ7yAXXbdoz6ufFvsNDPg5FcQVJ6Q3LLoaY',
+  ethereum: '0x7bE8581d7391Dc67095Dc0f6De129e7E5e7Fc6bE'
+};
+
 const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [showCryptoAddresses, setShowCryptoAddresses] = useState(false);
+  const [copiedNetwork, setCopiedNetwork] = useState<string | null>(null);
 
   const plans = [
     {
@@ -66,7 +75,17 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     if (method === 'card') {
       window.location.href = 'https://arganabridgecapital.gumroad.com/l/eijwo?_gl=1*qb9rlx*_ga*MTUxNDU5NDU1OC4xNzQ4NzE4OTg5*_ga_6LJN6D94N6*czE3NDg5NTEwMTAkbzMkZzEkdDE3NDg5NTU3OTMkajQxJGwwJGgw';
     } else {
-      setShowPaymentOptions(false); // Return to crypto addresses
+      setShowCryptoAddresses(true);
+    }
+  };
+
+  const copyToClipboard = async (text: string, network: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedNetwork(network);
+      setTimeout(() => setCopiedNetwork(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
     }
   };
 
@@ -151,7 +170,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                     <ul className="space-y-2 mb-4">
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start">
-                          <CheckCircle size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
+                          <Check size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
                           <span className={`text-sm ${feature.includes('One new strategy') ? 'text-accent font-bold' : ''}`}>
                             {feature}
                           </span>
@@ -177,11 +196,11 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 className="btn-primary w-full"
                 disabled={!selectedPlan}
               >
-                <DollarSign size={18} className="mr-2" />
+                <MessageCircle size={18} className="mr-2" />
                 Continue to Payment
               </button>
             </>
-          ) : (
+          ) : !showCryptoAddresses ? (
             <div className="py-4">
               <h3 className="text-xl font-semibold mb-6">Select Payment Method</h3>
               
@@ -216,6 +235,76 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 className="btn bg-dark-lighter hover:bg-dark-light text-light w-full mt-6"
               >
                 Back to Plans
+              </button>
+            </div>
+          ) : (
+            <div className="py-4">
+              <div className="flex items-center mb-6">
+                <button
+                  onClick={() => setShowCryptoAddresses(false)}
+                  className="mr-4 text-light-dark hover:text-accent transition-colors"
+                >
+                  <ArrowLeft size={24} />
+                </button>
+                <h3 className="text-xl font-semibold">Crypto Payment Details</h3>
+              </div>
+
+              <div className="space-y-6">
+                <div className="card bg-dark-lighter">
+                  <h4 className="text-lg font-semibold mb-4">USDT TRC20 (TRON)</h4>
+                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
+                    <code className="font-mono text-sm text-light-dark">{walletAddresses.trc20}</code>
+                    <button
+                      onClick={() => copyToClipboard(walletAddresses.trc20, 'trc20')}
+                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                    >
+                      {copiedNetwork === 'trc20' ? <Check size={20} /> : <Copy size={20} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="card bg-dark-lighter">
+                  <h4 className="text-lg font-semibold mb-4">USDT Solana</h4>
+                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
+                    <code className="font-mono text-sm text-light-dark">{walletAddresses.solana}</code>
+                    <button
+                      onClick={() => copyToClipboard(walletAddresses.solana, 'solana')}
+                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                    >
+                      {copiedNetwork === 'solana' ? <Check size={20} /> : <Copy size={20} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="card bg-dark-lighter">
+                  <h4 className="text-lg font-semibold mb-4">USDT ERC20 (Ethereum)</h4>
+                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
+                    <code className="font-mono text-sm text-light-dark">{walletAddresses.ethereum}</code>
+                    <button
+                      onClick={() => copyToClipboard(walletAddresses.ethereum, 'ethereum')}
+                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                    >
+                      {copiedNetwork === 'ethereum' ? <Check size={20} /> : <Copy size={20} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-4 bg-dark rounded-lg border border-accent/20">
+                  <h4 className="font-semibold text-accent mb-2">Important Instructions:</h4>
+                  <ol className="list-decimal list-inside space-y-2 text-light-dark">
+                    <li>Send the exact amount in USDT</li>
+                    <li>Include your email in the transaction memo</li>
+                    <li>After sending, email the transaction hash to: arganabridgecapital@gmail.com</li>
+                    <li>Your access will be activated within 24 hours</li>
+                  </ol>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setShowCryptoAddresses(false)}
+                className="btn bg-dark-lighter hover:bg-dark-light text-light w-full mt-6"
+              >
+                Back to Payment Methods
               </button>
             </div>
           )}

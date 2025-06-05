@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FAQItem {
   question: string;
   answer: string;
   category: string;
+  documentation?: {
+    url: string;
+    label: string;
+  };
 }
 
 const faqs: FAQItem[] = [
@@ -20,6 +24,24 @@ const faqs: FAQItem[] = [
     answer: "To get started, click the 'Get Access' button in the navigation bar and choose a subscription plan that best suits your needs. Once subscribed, you'll receive immediate access to our trading tools and indicators."
   },
   {
+    category: "Payment",
+    question: "How can I pay with a credit card?",
+    answer: "To pay with a credit card:\n\n1. Click on 'Get Access' or 'Subscribe Now'\n2. Select your desired plan\n3. Choose 'Card / PayPal' as your payment method\n4. You'll be redirected to our secure Gumroad checkout page\n5. Enter your card details and complete the purchase\n6. You'll receive instant access to your subscription\n\nWe accept all major credit cards including Visa, Mastercard, and American Express. All transactions are processed securely through Gumroad.",
+    documentation: {
+      url: "https://drive.google.com/file/d/1Hib5BBM9w8qQNdaD8QucZ2RXm27a7-uI/view",
+      label: "Credit Card Payment Guide"
+    }
+  },
+  {
+    category: "Payment",
+    question: "How can I pay with cryptocurrency?",
+    answer: "We accept USDT payments on multiple networks:\n\n1. Select 'Pay with Crypto' during checkout\n2. Choose your preferred network:\n   - TRON (TRC20)\n   - Ethereum (ERC20)\n   - Solana\n3. Send the exact USDT amount to the provided wallet address\n4. Important: Include your email in the transaction memo/reference\n5. Send the transaction hash to our support team\n6. Your access will be activated within 24 hours\n\nNote: Always double-check the wallet address before sending any payments.",
+    documentation: {
+      url: "https://drive.google.com/file/d/1qh4A9PWplHFu8W_BmR5nA9m3-1gCUK5T/view",
+      label: "Crypto Payment Guide"
+    }
+  },
+  {
     category: "Technical",
     question: "Which platforms are supported?",
     answer: "Our indicators and strategies work with major trading platforms including TradingView, MetaTrader (MT4/MT5), NinjaTrader, and cTrader. We also support various brokers like ICMarkets, Exness, FTMO, and more."
@@ -31,18 +53,13 @@ const faqs: FAQItem[] = [
   },
   {
     category: "Subscription",
-    question: "What payment methods do you accept?",
-    answer: "We accept both cryptocurrency payments (USDT on various networks) and traditional payment methods including credit cards and PayPal through our secure payment processor."
-  },
-  {
-    category: "Subscription",
-    question: "Can I cancel my subscription?",
-    answer: "Yes, you can cancel your subscription at any time. For monthly subscriptions, you'll maintain access until the end of your billing period."
+    question: "What happens after I make a payment?",
+    answer: "For card payments: You'll receive instant access via email with your login credentials and download instructions.\n\nFor crypto payments: Once we verify your transaction (usually within 24 hours), we'll send your access credentials to the email provided in the transaction memo."
   },
   {
     category: "Support",
-    question: "How can I get help if I have issues?",
-    answer: "We offer 24/7 support through our community channels including Discord, Telegram, and email. Our team typically responds within 24 hours."
+    question: "How can I get help if I have issues with payment?",
+    answer: "For payment support:\n\n1. Email us at arganabridgecapital@gmail.com\n2. Join our Discord or Telegram community\n3. Include your transaction details or order number\n\nOur support team is available 24/7 to assist you with any payment-related issues."
   },
   {
     category: "Support",
@@ -130,7 +147,18 @@ const FAQ = () => {
                       className="border-t border-dark-lighter"
                     >
                       <div className="px-6 py-4 bg-dark-lighter/50">
-                        <p className="text-light-dark">{faq.answer}</p>
+                        <p className="text-light-dark whitespace-pre-line">{faq.answer}</p>
+                        {faq.documentation && (
+                          <a
+                            href={faq.documentation.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center mt-4 px-4 py-2 bg-accent text-dark rounded-md hover:bg-accent-light transition-colors"
+                          >
+                            <Download size={16} className="mr-2" />
+                            {faq.documentation.label}
+                          </a>
+                        )}
                       </div>
                     </motion.div>
                   )}
