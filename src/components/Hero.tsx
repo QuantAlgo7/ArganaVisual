@@ -52,8 +52,18 @@ const chartConfigs = [
 const Hero = () => {
   const particleRef = useRef<HTMLDivElement>(null);
   const [activeChart, setActiveChart] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
   
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     if (!particleRef.current) return;
     
@@ -80,14 +90,14 @@ const Hero = () => {
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 px-4"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
       <div ref={particleRef} className="particle-container"></div>
       
-      <div className="container mx-auto relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-12">
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        <div className="max-w-4xl mx-auto text-center mb-16">
           <motion.h1 
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -99,7 +109,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-light-dark mb-10 max-w-2xl mx-auto"
+            className="text-xl md:text-2xl text-light-dark mb-10 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -108,25 +118,24 @@ const Hero = () => {
           </motion.p>
         </div>
 
-        <div 
-          ref={scrollRef}
-          className="overflow-x-auto pb-4 mb-12 -mx-4 px-4"
-        >
-          <div className="flex gap-4 min-w-max">
-            {chartConfigs.map((config, index) => (
+        {isMobile ? (
+          // Mobile view - Single card with swipe navigation
+          <div className="mb-12">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={config.title}
-                className={`card relative overflow-hidden transition-all duration-500 w-[280px] ${
-                  index === activeChart ? 'border-accent' : ''
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                key={activeChart}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                className="card relative overflow-hidden transition-all duration-500"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold flex items-center">
-                    <config.icon className="w-4 h-4 mr-2" style={{ color: config.color }} />
-                    {config.title}
+                    {(() => {
+                      const Icon = chartConfigs[activeChart].icon;
+                      return <Icon className="w-4 h-4 mr-2\" style={{ color: chartConfigs[activeChart].color }} />;
+                    })()}
+                    {chartConfigs[activeChart].title}
                   </h3>
                   <div className="flex items-center space-x-1">
                     <Zap className="w-3 h-3 text-accent animate-pulse" />
@@ -136,22 +145,80 @@ const Hero = () => {
                 
                 <div className="h-24 relative">
                   <MiniChart 
-                    data={config.data} 
-                    color={config.color}
-                    isActive={index === activeChart}
+                    data={chartConfigs[activeChart].data} 
+                    color={chartConfigs[activeChart].color}
+                    isActive={true}
                   />
                 </div>
 
                 <div className="mt-3 flex items-center justify-between">
-                  <span className="text-xs text-light-dark">{config.metrics.label}</span>
-                  <span className="text-sm font-mono font-semibold" style={{ color: config.color }}>
-                    {config.metrics.value}
+                  <span className="text-xs text-light-dark">{chartConfigs[activeChart].metrics.label}</span>
+                  <span className="text-sm font-mono font-semibold" style={{ color: chartConfigs[activeChart].color }}>
+                    {chartConfigs[activeChart].metrics.value}
                   </span>
                 </div>
+
+                {/* Mobile Navigation Dots */}
+                <div className="flex justify-center mt-4 space-x-2">
+                  {chartConfigs.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveChart(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === activeChart ? 'w-6 bg-accent' : 'bg-dark-lighter'
+                      }`}
+                      aria-label={`Go to chart ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </motion.div>
-            ))}
+            </AnimatePresence>
           </div>
-        </div>
+        ) : (
+          // Desktop view - Grid of cards
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+            {chartConfigs.map((config, index) => {
+              const Icon = config.icon;
+              return (
+                <motion.div
+                  key={config.title}
+                  className={`card relative overflow-hidden transition-all duration-500 ${
+                    index === activeChart ? 'md:col-span-2 lg:col-span-1 border-accent' : ''
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-semibold flex items-center">
+                      <Icon className="w-4 h-4 mr-2" style={{ color: config.color }} />
+                      {config.title}
+                    </h3>
+                    <div className="flex items-center space-x-1">
+                      <Zap className="w-3 h-3 text-accent animate-pulse" />
+                      <span className="text-xs text-accent">LIVE</span>
+                    </div>
+                  </div>
+                  
+                  <div className="h-24 relative">
+                    <MiniChart 
+                      data={config.data} 
+                      color={config.color}
+                      isActive={index === activeChart}
+                    />
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="text-xs text-light-dark">{config.metrics.label}</span>
+                    <span className="text-sm font-mono font-semibold" style={{ color: config.color }}>
+                      {config.metrics.value}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
         <motion.div 
           className="flex justify-center"

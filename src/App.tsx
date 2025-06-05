@@ -9,6 +9,7 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AllStrategies from './pages/AllStrategies';
+import FAQ from './pages/FAQ';
 import ChatWidget from './components/ChatWidget';
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
             </main>
           } />
           <Route path="/strategies" element={<AllStrategies />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
         <Footer />
         <ChatWidget />
@@ -59,4 +61,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
