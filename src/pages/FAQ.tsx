@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface FAQItem {
   question: string;
@@ -71,6 +72,7 @@ const faqs: FAQItem[] = [
 const FAQ = () => {
   const [openItems, setOpenItems] = useState<number[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const navigate = useNavigate();
 
   const categories = ["All", ...Array.from(new Set(faqs.map(faq => faq.category)))];
 
@@ -86,13 +88,25 @@ const FAQ = () => {
     activeCategory === "All" || faq.category === activeCategory
   );
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-dark pt-24 pb-16">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-accent via-primary-light to-accent bg-clip-text text-transparent">
-            Frequently Asked Questions
-          </h1>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-accent via-primary-light to-accent bg-clip-text text-transparent">
+              Frequently Asked Questions
+            </h1>
+            <button
+              onClick={handleHomeClick}
+              className="btn-accent"
+            >
+              Back to Home
+            </button>
+          </div>
           
           <p className="text-light-dark mb-12 text-lg">
             Find answers to common questions about Argana Bridge Capital's trading tools and services.

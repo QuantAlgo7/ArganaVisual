@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Search, TrendingUp, Activity, BarChart2, Zap, Maximize2, X, Clock } from 'lucide-react';
+import { Brain, Search, TrendingUp, Activity, BarChart2, Zap, Maximize2, X, Clock, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SubscriptionModal from '../components/SubscriptionModal';
 import { strategies } from '../data/strategies';
 
@@ -61,6 +62,7 @@ const AllStrategies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const indicatorsWithType = strategies.map((strategy, index) => ({
     ...strategy,
@@ -101,20 +103,26 @@ const AllStrategies = () => {
       </div>
       
       <div className="container mx-auto px-4 py-24 relative">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
-            <span className="bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
-              Advanced Trading Indicators
-            </span>
-          </h1>
-          <p className="text-xl text-light-dark max-w-3xl mx-auto">
-            Discover our suite of professional-grade trading indicators, powered by neural networks for precise market analysis and superior trading decisions.
-          </p>
-        </motion.div>
+        <div className="flex items-center justify-between mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-left"
+          >
+            <h1 className="text-5xl md:text-6xl font-display font-bold">
+              <span className="bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
+                Advanced Trading Indicators
+              </span>
+            </h1>
+          </motion.div>
+          <button
+            onClick={() => navigate('/')}
+            className="btn-accent flex items-center"
+          >
+            <ArrowLeft className="mr-2" size={20} />
+            Back to Home
+          </button>
+        </div>
 
         <div className="max-w-6xl mx-auto mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
