@@ -21,7 +21,18 @@ function App() {
       setIsLoading(false);
     }, 1500);
 
-    return () => clearTimeout(timer);
+    // Add refresh handler
+    const handleBeforeUnload = () => {
+      window.location.href = '/';
+      return undefined;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   if (isLoading) {

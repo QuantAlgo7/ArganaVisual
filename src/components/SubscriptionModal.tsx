@@ -250,41 +250,78 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
               </div>
 
               <div className="space-y-6">
+                {/* Mobile-optimized wallet address cards */}
                 <div className="card bg-dark-lighter">
                   <h4 className="text-lg font-semibold mb-4">USDT TRC20 (TRON)</h4>
-                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
-                    <code className="font-mono text-sm text-light-dark">{walletAddresses.trc20}</code>
+                  <div className="flex flex-col space-y-2">
+                    <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
+                      {walletAddresses.trc20}
+                    </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.trc20, 'trc20')}
-                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                      className="w-full btn-accent flex items-center justify-center mt-2"
                     >
-                      {copiedNetwork === 'trc20' ? <Check size={20} /> : <Copy size={20} />}
+                      {copiedNetwork === 'trc20' ? (
+                        <span className="flex items-center">
+                          <Check size={20} className="mr-2" />
+                          Copied!
+                        </span>
+                      ) : (
+                        <span className="flex items-center">
+                          <Copy size={20} className="mr-2" />
+                          Copy Address
+                        </span>
+                      )}
                     </button>
                   </div>
                 </div>
 
                 <div className="card bg-dark-lighter">
                   <h4 className="text-lg font-semibold mb-4">USDT Solana</h4>
-                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
-                    <code className="font-mono text-sm text-light-dark">{walletAddresses.solana}</code>
+                  <div className="flex flex-col space-y-2">
+                    <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
+                      {walletAddresses.solana}
+                    </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.solana, 'solana')}
-                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                      className="w-full btn-accent flex items-center justify-center mt-2"
                     >
-                      {copiedNetwork === 'solana' ? <Check size={20} /> : <Copy size={20} />}
+                      {copiedNetwork === 'solana' ? (
+                        <span className="flex items-center">
+                          <Check size={20} className="mr-2" />
+                          Copied!
+                        </span>
+                      ) : (
+                        <span className="flex items-center">
+                          <Copy size={20} className="mr-2" />
+                          Copy Address
+                        </span>
+                      )}
                     </button>
                   </div>
                 </div>
 
                 <div className="card bg-dark-lighter">
                   <h4 className="text-lg font-semibold mb-4">USDT ERC20 (Ethereum)</h4>
-                  <div className="flex items-center justify-between bg-dark p-4 rounded-lg mb-2">
-                    <code className="font-mono text-sm text-light-dark">{walletAddresses.ethereum}</code>
+                  <div className="flex flex-col space-y-2">
+                    <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
+                      {walletAddresses.ethereum}
+                    </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.ethereum, 'ethereum')}
-                      className="ml-2 text-accent hover:text-accent-light transition-colors"
+                      className="w-full btn-accent flex items-center justify-center mt-2"
                     >
-                      {copiedNetwork === 'ethereum' ? <Check size={20} /> : <Copy size={20} />}
+                      {copiedNetwork === 'ethereum' ? (
+                        <span className="flex items-center">
+                          <Check size={20} className="mr-2" />
+                          Copied!
+                        </span>
+                      ) : (
+                        <span className="flex items-center">
+                          <Copy size={20} className="mr-2" />
+                          Copy Address
+                        </span>
+                      )}
                     </button>
                   </div>
                 </div>
