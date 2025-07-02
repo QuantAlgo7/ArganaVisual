@@ -1,9 +1,11 @@
 import { ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { useState } from 'react';
 import { testimonials } from '../data/testimonials';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t, isRTL } = useLanguage();
   
   const goToPrev = () => {
     setCurrentIndex((prevIndex) => 
@@ -20,21 +22,21 @@ const Testimonials = () => {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section id="testimonials" className="section bg-dark-light relative">
+    <section id="testimonials" className="section bg-dark-light relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
       <div className="container mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={`text-center max-w-3xl mx-auto mb-16 ${isRTL ? 'text-right' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Client Success Stories
+            {t('testimonials.title')}
           </h2>
           <p className="text-light-dark">
-            Hear from institutional investors and professional traders who have leveraged our algorithmic strategies to achieve exceptional results.
+            {t('testimonials.description')}
           </p>
         </div>
         
         <div className="max-w-4xl mx-auto relative">
-          <div className="absolute -left-4 top-0 opacity-30">
+          <div className={`absolute ${isRTL ? '-right-4' : '-left-4'} top-0 opacity-30`}>
             <Quote size={80} className="text-accent" />
           </div>
           
@@ -60,13 +62,13 @@ const Testimonials = () => {
             </div>
           </div>
           
-          <div className="flex justify-center mt-8 space-x-4">
+          <div className={`flex justify-center mt-8 space-x-4 ${isRTL ? 'flex-row-reverse space-x-reverse' : ''}`}>
             <button 
               onClick={goToPrev}
               className="p-2 border border-dark-lighter rounded-full hover:bg-dark-lighter transition-colors"
               aria-label="Previous testimonial"
             >
-              <ArrowLeft size={20} className="text-accent" />
+              {isRTL ? <ArrowRight size={20} className="text-accent" /> : <ArrowLeft size={20} className="text-accent" />}
             </button>
             
             <div className="flex items-center space-x-2">
@@ -89,7 +91,7 @@ const Testimonials = () => {
               className="p-2 border border-dark-lighter rounded-full hover:bg-dark-lighter transition-colors"
               aria-label="Next testimonial"
             >
-              <ArrowRight size={20} className="text-accent" />
+              {isRTL ? <ArrowLeft size={20} className="text-accent" /> : <ArrowRight size={20} className="text-accent" />}
             </button>
           </div>
         </div>

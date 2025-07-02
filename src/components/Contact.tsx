@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Send, DiscIcon as BrandDiscord, Youtube, GitBranch as BrandTelegram, Instagram, GitBranch as BrandTiktok, Twitter } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Contact = () => {
   });
   
   const [submitted, setSubmitted] = useState(false);
+  const { t, isRTL } = useLanguage();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -63,15 +65,15 @@ ${formData.message}
   ];
 
   return (
-    <section id="contact" className="section bg-dark relative">
+    <section id="contact" className="section bg-dark relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto relative z-10">
-        <div className="max-w-5xl mx-auto">
+        <div className={`max-w-5xl mx-auto ${isRTL ? 'text-right' : ''}`}>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Get In Touch
+              {t('contact.title')}
             </h2>
             <p className="text-light-dark max-w-2xl mx-auto">
-              Ready to transform your investment strategy with institutional-grade algorithmic intelligence? Contact our team today.
+              {t('contact.description')}
             </p>
           </div>
           
@@ -81,7 +83,7 @@ ${formData.message}
               <div className="card">
                 {/* Social Media Links */}
                 <div>
-                  <h3 className="font-semibold text-lg mb-4">Connect With Us</h3>
+                  <h3 className="font-semibold text-lg mb-4">{t('contact.connectWith')}</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {socialLinks.map((social) => (
                       <a
@@ -107,11 +109,11 @@ ${formData.message}
               {submitted ? (
                 <div className="text-center py-8">
                   <div className="bg-accent/10 inline-flex items-center justify-center p-3 rounded-full mb-4">
-                    <Send className="text-accent" size={32} />
+                    <Send className="text-accent\" size={32} />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2">Message Sent!</h3>
+                  <h3 className="text-2xl font-semibold mb-2">{t('contact.success.title')}</h3>
                   <p className="text-light-dark">
-                    Thank you for contacting us. We'll get back to you shortly.
+                    {t('contact.success.description')}
                   </p>
                 </div>
               ) : (
@@ -119,7 +121,7 @@ ${formData.message}
                   <div className="grid md:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium mb-2">
-                        Your Name
+                        {t('contact.form.name')}
                       </label>
                       <input
                         type="text"
@@ -134,7 +136,7 @@ ${formData.message}
                     
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium mb-2">
-                        Email Address
+                        {t('contact.form.email')}
                       </label>
                       <input
                         type="email"
@@ -149,7 +151,7 @@ ${formData.message}
                     
                     <div className="md:col-span-2">
                       <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                        Subject
+                        {t('contact.form.subject')}
                       </label>
                       <input
                         type="text"
@@ -164,7 +166,7 @@ ${formData.message}
                     
                     <div className="md:col-span-2">
                       <label htmlFor="message" className="block text-sm font-medium mb-2">
-                        Message
+                        {t('contact.form.message')}
                       </label>
                       <textarea
                         id="message"
@@ -182,8 +184,8 @@ ${formData.message}
                     type="submit"
                     className="btn-primary w-full mt-6"
                   >
-                    <Send size={18} className="mr-2" />
-                    Send Message
+                    <Send size={18} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                    {t('contact.form.send')}
                   </button>
                 </form>
               )}

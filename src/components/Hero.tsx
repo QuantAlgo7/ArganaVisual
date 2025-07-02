@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Coins, BarChart4, Bitcoin, Globe, Brain, Zap } from 'lucide-react';
 import ParticleNetwork from '../utils/ParticleNetwork';
 import MiniChart from './charts/MiniChart';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const generateChartData = (length: number, volatility: number) => {
   return Array.from({ length }, (_, i) => ({
@@ -53,6 +54,7 @@ const Hero = () => {
   const particleRef = useRef<HTMLDivElement>(null);
   const [activeChart, setActiveChart] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const { t, isRTL } = useLanguage();
   
   useEffect(() => {
     const handleResize = () => {
@@ -91,20 +93,21 @@ const Hero = () => {
     <section 
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div ref={particleRef} className="particle-container"></div>
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+        <div className={`max-w-4xl mx-auto text-center mb-16 ${isRTL ? 'text-right' : ''}`}>
           <motion.h1 
             className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            The Future of 
+            {t('hero.title')}
             <span className="bg-gradient-to-r from-accent to-primary-light bg-clip-text text-transparent block mt-2">
-              Alpha Generation
+              {t('hero.subtitle')}
             </span>
           </motion.h1>
           
@@ -114,7 +117,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            Algorithmic Intelligence. Predictive Precision. Institutional Performance.
+            {t('hero.description')}
           </motion.p>
         </div>
 
@@ -124,22 +127,22 @@ const Hero = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeChart}
-                initial={{ opacity: 0, x: 100 }}
+                initial={{ opacity: 0, x: isRTL ? -100 : 100 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
+                exit={{ opacity: 0, x: isRTL ? 100 : -100 }}
                 className="card relative overflow-hidden transition-all duration-500"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-semibold flex items-center">
+                <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <h3 className={`text-sm font-semibold flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                     {(() => {
                       const Icon = chartConfigs[activeChart].icon;
-                      return <Icon className="w-4 h-4 mr-2\" style={{ color: chartConfigs[activeChart].color }} />;
+                      return <Icon className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} style={{ color: chartConfigs[activeChart].color }} />;
                     })()}
                     {chartConfigs[activeChart].title}
                   </h3>
-                  <div className="flex items-center space-x-1">
+                  <div className={`flex items-center space-x-1 ${isRTL ? 'flex-row-reverse space-x-reverse' : ''}`}>
                     <Zap className="w-3 h-3 text-accent animate-pulse" />
-                    <span className="text-xs text-accent">LIVE</span>
+                    <span className="text-xs text-accent">{t('hero.liveLabel')}</span>
                   </div>
                 </div>
                 
@@ -151,8 +154,8 @@ const Hero = () => {
                   />
                 </div>
 
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="text-xs text-light-dark">{chartConfigs[activeChart].metrics.label}</span>
+                <div className={`mt-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span className="text-xs text-light-dark">{t('hero.winRate')}</span>
                   <span className="text-sm font-mono font-semibold" style={{ color: chartConfigs[activeChart].color }}>
                     {chartConfigs[activeChart].metrics.value}
                   </span>
@@ -189,14 +192,14 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-semibold flex items-center">
-                      <Icon className="w-4 h-4 mr-2" style={{ color: config.color }} />
+                  <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <h3 className={`text-sm font-semibold flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      <Icon className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} style={{ color: config.color }} />
                       {config.title}
                     </h3>
-                    <div className="flex items-center space-x-1">
+                    <div className={`flex items-center space-x-1 ${isRTL ? 'flex-row-reverse space-x-reverse' : ''}`}>
                       <Zap className="w-3 h-3 text-accent animate-pulse" />
-                      <span className="text-xs text-accent">LIVE</span>
+                      <span className="text-xs text-accent">{t('hero.liveLabel')}</span>
                     </div>
                   </div>
                   
@@ -208,8 +211,8 @@ const Hero = () => {
                     />
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-xs text-light-dark">{config.metrics.label}</span>
+                  <div className={`mt-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <span className="text-xs text-light-dark">{t('hero.winRate')}</span>
                     <span className="text-sm font-mono font-semibold" style={{ color: config.color }}>
                       {config.metrics.value}
                     </span>
@@ -230,7 +233,7 @@ const Hero = () => {
             className="btn-accent"
             onClick={scrollToStrategies}
           >
-            Explore Strategies
+            {t('hero.exploreStrategies')}
           </button>
         </motion.div>
 

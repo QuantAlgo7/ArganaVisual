@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, TrendingUp } from 'lucide-react';
 import SubscriptionModal from './SubscriptionModal';
+import LanguageSelector from './LanguageSelector';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,6 +11,7 @@ const Navbar = () => {
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, isRTL } = useLanguage();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -65,54 +68,60 @@ const Navbar = () => {
           scrolled ? 'bg-dark-light/90 backdrop-blur-lg py-3' : 'bg-transparent py-6'
         }`}
       >
-        <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+        <div className={`container mx-auto px-4 md:px-8 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           <button 
             onClick={() => handleNavigation('/')} 
             className="flex items-center"
           >
-            <TrendingUp className="text-accent mr-2" size={28} />
+            <TrendingUp className={`text-accent ${isRTL ? 'ml-2' : 'mr-2'}`} size={28} />
             <span className="font-display text-xl font-semibold tracking-wide">
               <span className="text-accent">A</span>rgana <span className="text-accent">B</span>ridge <span className="text-accent">C</span>apital
             </span>
           </button>
 
           {/* Desktop menu */}
-          <nav className="hidden md:flex gap-8">
-            <NavLink href="#home" label="Home" />
-            <NavLink href="#chart" label="Our Vision" />
-            <NavLink href="/strategies" label="Strategies" />
-            <NavLink href="#testimonials" label="Testimonials" />
-            <NavLink href="#contact" label="Contact" />
-            <NavLink href="/faq" label="FAQ" />
+          <nav className={`hidden md:flex gap-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <NavLink href="#home" label={t('nav.home')} />
+            <NavLink href="#chart" label={t('nav.vision')} />
+            <NavLink href="/strategies" label={t('nav.strategies')} />
+            <NavLink href="#testimonials" label={t('nav.testimonials')} />
+            <NavLink href="#contact" label={t('nav.contact')} />
+            <NavLink href="/faq" label={t('nav.faq')} />
           </nav>
 
-          <button 
-            className="hidden md:block btn-accent"
-            onClick={() => setShowSubscriptionModal(true)}
-          >
-            Get Access
-          </button>
+          <div className={`hidden md:flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <LanguageSelector />
+            <button 
+              className="btn-accent"
+              onClick={() => setShowSubscriptionModal(true)}
+            >
+              {t('nav.getAccess')}
+            </button>
+          </div>
 
           {/* Mobile menu button */}
-          <button 
-            className="md:hidden text-light hover:text-accent transition-colors"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className={`md:hidden flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <LanguageSelector />
+            <button 
+              className="text-light hover:text-accent transition-colors"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden bg-dark-light/95 backdrop-blur-lg py-4">
-            <nav className="container mx-auto px-4 flex flex-col space-y-4">
-              <NavLink href="#home" label="Home" />
-              <NavLink href="#chart" label="Our Vision" />
-              <NavLink href="/strategies" label="Strategies" />
-              <NavLink href="#testimonials" label="Testimonials" />
-              <NavLink href="#contact" label="Contact" />
-              <NavLink href="/faq" label="FAQ" />
+            <nav className={`container mx-auto px-4 flex flex-col space-y-4 ${isRTL ? 'text-right' : ''}`}>
+              <NavLink href="#home" label={t('nav.home')} />
+              <NavLink href="#chart" label={t('nav.vision')} />
+              <NavLink href="/strategies" label={t('nav.strategies')} />
+              <NavLink href="#testimonials" label={t('nav.testimonials')} />
+              <NavLink href="#contact" label={t('nav.contact')} />
+              <NavLink href="/faq" label={t('nav.faq')} />
               <button 
                 className="btn-accent w-full mt-4"
                 onClick={() => {
@@ -120,7 +129,7 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                 }}
               >
-                Get Access
+                {t('nav.getAccess')}
               </button>
             </nav>
           </div>
@@ -137,8 +146,9 @@ const Navbar = () => {
             category: "momentum",
             shortDescription: "Access to our complete suite of algorithmic trading strategies",
             longDescription: "Get unlimited access to all our trading strategies, including future releases",
-            logicDescription: "Multiple algorithmic approaches combined for optimal market coverage",
+            indicatorArchitecture: "Multiple algorithmic approaches combined for optimal market coverage",
             marketApplication: "Comprehensive coverage across all major market conditions",
+            timeframes: ['All'],
             chartUrl: "https://images.pexels.com/photos/7567434/pexels-photo-7567434.jpeg",
             metrics: {
               sharpe: 4.2,

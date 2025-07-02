@@ -17,6 +17,20 @@
   h1, h2, h3, h4 {
     @apply font-display;
   }
+
+  /* RTL Support */
+  [dir="rtl"] {
+    text-align: right;
+  }
+
+  [dir="rtl"] .particle-container {
+    transform: scaleX(-1);
+  }
+
+  /* Arabic font support */
+  [dir="rtl"] * {
+    font-family: 'Inter', 'Tahoma', 'Arial', sans-serif;
+  }
 }
 
 @layer components {
@@ -80,4 +94,13 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #00F5C4;
+}
+
+/* RTL specific adjustments */
+[dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row-reverse;
 }

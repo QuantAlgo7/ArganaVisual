@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, MessageCircle, DiscIcon as Discord, Youtube, GitBranch as Telegram, Instagram, GitBranch as TikTok, Twitter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const socialLinks = [
   { icon: Discord, href: 'https://discord.gg/E4QnRWau', label: 'Discord' },
@@ -13,14 +14,15 @@ const socialLinks = [
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t, isRTL } = useLanguage();
 
   return (
     <>
       {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-accent text-dark p-4 rounded-full shadow-lg hover:bg-accent-light transition-colors z-50"
-        aria-label="Open chat"
+        className={`fixed bottom-6 ${isRTL ? 'left-6' : 'right-6'} bg-accent text-dark p-4 rounded-full shadow-lg hover:bg-accent-light transition-colors z-50`}
+        aria-label={t('chat.openChat')}
       >
         <MessageCircle size={24} />
       </button>
@@ -32,15 +34,16 @@ const ChatWidget = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 w-80 bg-dark-card border border-dark-lighter rounded-xl shadow-xl overflow-hidden z-50"
+            className={`fixed bottom-24 ${isRTL ? 'left-6' : 'right-6'} w-80 bg-dark-card border border-dark-lighter rounded-xl shadow-xl overflow-hidden z-50`}
+            dir={isRTL ? 'rtl' : 'ltr'}
           >
             {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-dark-lighter">
-              <h3 className="font-display font-semibold">Chat with Us</h3>
+            <div className={`flex justify-between items-center p-4 border-b border-dark-lighter ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <h3 className="font-display font-semibold">{t('chat.title')}</h3>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-light-dark hover:text-accent transition-colors"
-                aria-label="Close chat"
+                aria-label={t('chat.closeChat')}
               >
                 <X size={20} />
               </button>
@@ -49,7 +52,7 @@ const ChatWidget = () => {
             {/* Content */}
             <div className="p-4">
               <p className="text-light-dark mb-4">
-                Contact us through our social media channels below:
+                {t('chat.description')}
               </p>
 
               <div className="grid grid-cols-3 gap-3">

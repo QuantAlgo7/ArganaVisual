@@ -4,6 +4,7 @@ import SubscriptionModal from './SubscriptionModal';
 import StrategyCard from './StrategyCard';
 import { strategies } from '../data/strategies';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const platforms = [
   { name: 'ICMarkets' },
@@ -33,6 +34,7 @@ const StrategyDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigate = useNavigate();
+  const { t, isRTL } = useLanguage();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,14 +59,14 @@ const StrategyDashboard = () => {
   };
 
   return (
-    <section id="strategies" className="section bg-dark relative">
+    <section id="strategies" className="section bg-dark relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={`text-center max-w-3xl mx-auto mb-16 ${isRTL ? 'text-right' : ''}`}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Algorithmic Trading Strategies
+            {t('strategies.title')}
           </h2>
           <p className="text-light-dark">
-            Our proprietary trading algorithms leverage neural networks and machine learning to identify market inefficiencies and generate consistent alpha.
+            {t('strategies.description')}
           </p>
         </div>
 
@@ -85,20 +87,20 @@ const StrategyDashboard = () => {
             className="btn-primary"
             onClick={handleViewAllStrategies}
           >
-            <DollarSign size={18} className="mr-2" />
-            View All Trading Strategies
+            <DollarSign size={18} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('strategies.viewAll')}
           </button>
         </div>
 
         {/* Platform Band */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-display font-bold text-center mb-12 bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
-            Works With All Your Favorite Platforms
+            {t('strategies.platformsTitle')}
           </h3>
           
           <div className="relative h-24 overflow-hidden bg-dark-lighter/30 backdrop-blur-sm rounded-xl">
             <div 
-              className="absolute flex items-center space-x-16 transition-transform duration-500 py-4"
+              className={`absolute flex items-center space-x-16 transition-transform duration-500 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}
               style={{ 
                 transform: `translateX(-${scrollPosition}px)`,
                 width: `${platforms.length * 200}px`
@@ -117,8 +119,8 @@ const StrategyDashboard = () => {
             </div>
             
             {/* Gradient Overlays */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-dark to-transparent z-10" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-dark to-transparent z-10" />
+            <div className={`absolute inset-y-0 ${isRTL ? 'right-0' : 'left-0'} w-32 bg-gradient-to-${isRTL ? 'l' : 'r'} from-dark to-transparent z-10`} />
+            <div className={`absolute inset-y-0 ${isRTL ? 'left-0' : 'right-0'} w-32 bg-gradient-to-${isRTL ? 'r' : 'l'} from-dark to-transparent z-10`} />
           </div>
         </div>
       </div>

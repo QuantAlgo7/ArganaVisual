@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, MessageCircle, CreditCard, Wallet, Copy, Check, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Strategy } from '../types/strategy';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SubscriptionModalProps {
   onClose: () => void;
@@ -19,53 +20,32 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showCryptoAddresses, setShowCryptoAddresses] = useState(false);
   const [copiedNetwork, setCopiedNetwork] = useState<string | null>(null);
+  const { t, isRTL } = useLanguage();
 
   const plans = [
     {
       id: 'core',
-      name: 'Premuim Indicator Access',
+      name: t('subscription.plans.core.name'),
       price: '$39',
       period: '/month',
-      features: [
-        'Full access to our proprietary indicator suite',
-        'Mix smart indicators and receive a new custom one every month',
-        'Custom Alert',
-        'Community access',
-        '24/7 support & active toolkit updates',
-      ],
+      features: t('subscription.plans.core.features'),
     },
     {
       id: 'strategy',
-      name: 'Premuim Strategy Access',
+      name: t('subscription.plans.strategy.name'),
       price: '$79',
       period: '/month',
-      features: [
-        'Everything in Core Access',
-        'Full access to our portfolio of algorithmic trading strategies',
-        'Backtested models across multiple asset classes',
-        'Optimized for various market regimes',
-        'Custom Alert',
-        'Community access',
-        '24/7 support & active toolkit updates',
-      ],
+      features: t('subscription.plans.strategy.features'),
       recommended: true,
     },
     {
       id: 'autonomous',
-      name: 'Fully Automated Bots',
+      name: t('subscription.plans.autonomous.name'),
       price: '$99',
       period: '/month',
-      features: [
-        'Everything in Strategy Access',
-        'Access to fully autonomous trading systems (automated bots)',
-        'Execute trades 24/7 with AI-optimized logic — no manual input required',
-        'Plug-and-play architecture compatible with major broker platforms',
-        'Community access',
-        '24/7 support & active toolkit updates',
-        '🔹 **One new strategy. 100% yours. Every month.**',
-      ],
+      features: t('subscription.plans.autonomous.features'),
       promotion: {
-        label: 'Limited Time Offer',
+        label: t('subscription.limitedTime'),
         originalPrice: '$149/month'
       }
     },
@@ -98,10 +78,11 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
       <div 
         className="bg-dark-card border border-dark-lighter rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
         onClick={stopPropagation}
+        dir={isRTL ? 'rtl' : 'ltr'}
       >
-        <div className="sticky top-0 z-10 bg-dark-card flex justify-between items-center border-b border-dark-lighter p-6">
+        <div className={`sticky top-0 z-10 bg-dark-card flex justify-between items-center border-b border-dark-lighter p-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <h2 className="text-2xl font-display font-semibold">
-            Subscribe to <span className="text-accent">{strategy.name}</span>
+            {t('subscription.title')} <span className="text-accent">{strategy.name}</span>
           </h2>
           <button 
             onClick={onClose}
@@ -118,15 +99,15 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
             <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
             <div className="relative p-6 text-center">
               <div className="animate-pulse">
-                <span className="text-accent text-2xl font-display font-bold">🔥 LIMITED OFFER: Get Lifetime Access for Only $99! 🔥</span>
+                <span className="text-accent text-2xl font-display font-bold">{t('subscription.limitedOffer')}</span>
               </div>
-              <p className="text-light-dark mt-2">One-time payment — no recurring fees!</p>
+              <p className="text-light-dark mt-2">{t('subscription.oneTimePayment')}</p>
             </div>
           </div>
 
           {!showPaymentOptions ? (
             <>
-              <h3 className="text-xl font-semibold mb-6">Select a Subscription Plan</h3>
+              <h3 className={`text-xl font-semibold mb-6 ${isRTL ? 'text-right' : ''}`}>{t('subscription.selectPlan')}</h3>
               
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 {plans.map((plan) => (
@@ -139,7 +120,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                   >
                     {plan.recommended && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary px-3 py-1 rounded-full text-xs font-semibold">
-                        Recommended
+                        {t('subscription.recommended')}
                       </div>
                     )}
                     {plan.promotion && (
@@ -148,15 +129,15 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                       </div>
                     )}
                     
-                    <h4 className="text-lg font-display font-semibold mb-2">{plan.name}</h4>
-                    <div className="mb-4">
+                    <h4 className={`text-lg font-display font-semibold mb-2 ${isRTL ? 'text-right' : ''}`}>{plan.name}</h4>
+                    <div className={`mb-4 ${isRTL ? 'text-right' : ''}`}>
                       {plan.promotion ? (
                         <div>
                           <span className="text-2xl font-display font-bold">{plan.price}</span>
                           <span className="text-light-dark text-sm">{plan.period}</span>
                           <div className="mt-1">
                             <span className="text-sm text-light-dark line-through mr-2">{plan.promotion.originalPrice}</span>
-                            <span className="text-xs text-accent">Save 33%</span>
+                            <span className="text-xs text-accent">{t('subscription.save')}</span>
                           </div>
                         </div>
                       ) : (
@@ -167,10 +148,10 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                       )}
                     </div>
                     
-                    <ul className="space-y-2 mb-4">
-                      {plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-start">
-                          <Check size={16} className="text-accent mr-2 mt-0.5 flex-shrink-0" />
+                    <ul className={`space-y-2 mb-4 ${isRTL ? 'text-right' : ''}`}>
+                      {plan.features.map((feature: string, index: number) => (
+                        <li key={index} className={`flex items-start ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Check size={16} className={`text-accent ${isRTL ? 'ml-2' : 'mr-2'} mt-0.5 flex-shrink-0`} />
                           <span className={`text-sm ${feature.includes('One new strategy') ? 'text-accent font-bold' : ''}`}>
                             {feature}
                           </span>
@@ -185,7 +166,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                           : 'bg-dark-lighter text-light hover:bg-dark-light'
                       }`}
                     >
-                      {selectedPlan === plan.id ? 'Selected' : 'Select Plan'}
+                      {selectedPlan === plan.id ? t('subscription.selected') : t('subscription.selectPlan2')}
                     </button>
                   </div>
                 ))}
@@ -193,40 +174,40 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
               
               <button 
                 onClick={() => selectedPlan && setShowPaymentOptions(true)}
-                className="btn-primary w-full"
+                className={`btn-primary w-full ${isRTL ? 'flex-row-reverse' : ''}`}
                 disabled={!selectedPlan}
               >
-                <MessageCircle size={18} className="mr-2" />
-                Continue to Payment
+                <MessageCircle size={18} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                {t('subscription.continueToPayment')}
               </button>
             </>
           ) : !showCryptoAddresses ? (
             <div className="py-4">
-              <h3 className="text-xl font-semibold mb-6">Select Payment Method</h3>
+              <h3 className={`text-xl font-semibold mb-6 ${isRTL ? 'text-right' : ''}`}>{t('subscription.paymentMethod')}</h3>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div 
                   className="card cursor-pointer hover:border-accent"
                   onClick={() => handlePaymentMethodSelect('crypto')}
                 >
-                  <Wallet size={24} className="text-accent mb-4" />
-                  <h4 className="text-lg font-semibold mb-2">Pay with Crypto</h4>
-                  <p className="text-light-dark text-sm mb-4">
-                    Pay using USDT on TRON, SOLANA, or ETHEREUM network
+                  <Wallet size={24} className={`text-accent mb-4 ${isRTL ? 'ml-auto' : ''}`} />
+                  <h4 className={`text-lg font-semibold mb-2 ${isRTL ? 'text-right' : ''}`}>{t('subscription.crypto.title')}</h4>
+                  <p className={`text-light-dark text-sm mb-4 ${isRTL ? 'text-right' : ''}`}>
+                    {t('subscription.crypto.description')}
                   </p>
-                  <div className="text-xs text-accent">Recommended</div>
+                  <div className={`text-xs text-accent ${isRTL ? 'text-right' : ''}`}>{t('subscription.crypto.recommended')}</div>
                 </div>
 
                 <div 
                   className="card cursor-pointer hover:border-accent"
                   onClick={() => handlePaymentMethodSelect('card')}
                 >
-                  <CreditCard size={24} className="text-accent mb-4" />
-                  <h4 className="text-lg font-semibold mb-2">Card / PayPal</h4>
-                  <p className="text-light-dark text-sm mb-4">
-                    Secure payment via credit card or PayPal
+                  <CreditCard size={24} className={`text-accent mb-4 ${isRTL ? 'ml-auto' : ''}`} />
+                  <h4 className={`text-lg font-semibold mb-2 ${isRTL ? 'text-right' : ''}`}>{t('subscription.card.title')}</h4>
+                  <p className={`text-light-dark text-sm mb-4 ${isRTL ? 'text-right' : ''}`}>
+                    {t('subscription.card.description')}
                   </p>
-                  <div className="text-xs text-accent">Processed by Gumroad</div>
+                  <div className={`text-xs text-accent ${isRTL ? 'text-right' : ''}`}>{t('subscription.card.processed')}</div>
                 </div>
               </div>
 
@@ -234,42 +215,42 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 onClick={() => setShowPaymentOptions(false)}
                 className="btn bg-dark-lighter hover:bg-dark-light text-light w-full mt-6"
               >
-                Back to Plans
+                {t('subscription.backToPlans')}
               </button>
             </div>
           ) : (
             <div className="py-4">
-              <div className="flex items-center mb-6">
+              <div className={`flex items-center mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <button
                   onClick={() => setShowCryptoAddresses(false)}
-                  className="mr-4 text-light-dark hover:text-accent transition-colors"
+                  className={`${isRTL ? 'ml-4' : 'mr-4'} text-light-dark hover:text-accent transition-colors`}
                 >
                   <ArrowLeft size={24} />
                 </button>
-                <h3 className="text-xl font-semibold">Crypto Payment Details</h3>
+                <h3 className="text-xl font-semibold">{t('subscription.cryptoDetails.title')}</h3>
               </div>
 
               <div className="space-y-6">
                 {/* Mobile-optimized wallet address cards */}
                 <div className="card bg-dark-lighter">
-                  <h4 className="text-lg font-semibold mb-4">USDT TRC20 (TRON)</h4>
+                  <h4 className={`text-lg font-semibold mb-4 ${isRTL ? 'text-right' : ''}`}>USDT TRC20 (TRON)</h4>
                   <div className="flex flex-col space-y-2">
                     <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
                       {walletAddresses.trc20}
                     </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.trc20, 'trc20')}
-                      className="w-full btn-accent flex items-center justify-center mt-2"
+                      className={`w-full btn-accent flex items-center justify-center mt-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     >
                       {copiedNetwork === 'trc20' ? (
-                        <span className="flex items-center">
-                          <Check size={20} className="mr-2" />
-                          Copied!
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Check size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copied')}
                         </span>
                       ) : (
-                        <span className="flex items-center">
-                          <Copy size={20} className="mr-2" />
-                          Copy Address
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Copy size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copyAddress')}
                         </span>
                       )}
                     </button>
@@ -277,24 +258,24 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 </div>
 
                 <div className="card bg-dark-lighter">
-                  <h4 className="text-lg font-semibold mb-4">USDT Solana</h4>
+                  <h4 className={`text-lg font-semibold mb-4 ${isRTL ? 'text-right' : ''}`}>USDT Solana</h4>
                   <div className="flex flex-col space-y-2">
                     <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
                       {walletAddresses.solana}
                     </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.solana, 'solana')}
-                      className="w-full btn-accent flex items-center justify-center mt-2"
+                      className={`w-full btn-accent flex items-center justify-center mt-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     >
                       {copiedNetwork === 'solana' ? (
-                        <span className="flex items-center">
-                          <Check size={20} className="mr-2" />
-                          Copied!
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Check size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copied')}
                         </span>
                       ) : (
-                        <span className="flex items-center">
-                          <Copy size={20} className="mr-2" />
-                          Copy Address
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Copy size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copyAddress')}
                         </span>
                       )}
                     </button>
@@ -302,24 +283,24 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 </div>
 
                 <div className="card bg-dark-lighter">
-                  <h4 className="text-lg font-semibold mb-4">USDT ERC20 (Ethereum)</h4>
+                  <h4 className={`text-lg font-semibold mb-4 ${isRTL ? 'text-right' : ''}`}>USDT ERC20 (Ethereum)</h4>
                   <div className="flex flex-col space-y-2">
                     <div className="bg-dark p-4 rounded-lg break-all font-mono text-sm text-light-dark">
                       {walletAddresses.ethereum}
                     </div>
                     <button
                       onClick={() => copyToClipboard(walletAddresses.ethereum, 'ethereum')}
-                      className="w-full btn-accent flex items-center justify-center mt-2"
+                      className={`w-full btn-accent flex items-center justify-center mt-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     >
                       {copiedNetwork === 'ethereum' ? (
-                        <span className="flex items-center">
-                          <Check size={20} className="mr-2" />
-                          Copied!
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Check size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copied')}
                         </span>
                       ) : (
-                        <span className="flex items-center">
-                          <Copy size={20} className="mr-2" />
-                          Copy Address
+                        <span className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <Copy size={20} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                          {t('subscription.cryptoDetails.copyAddress')}
                         </span>
                       )}
                     </button>
@@ -327,12 +308,12 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 </div>
 
                 <div className="mt-6 p-4 bg-dark rounded-lg border border-accent/20">
-                  <h4 className="font-semibold text-accent mb-2">Important Instructions:</h4>
-                  <ol className="list-decimal list-inside space-y-2 text-light-dark">
-                    <li>Send the exact amount in USDT</li>
-                    <li>Include your email in the transaction memo</li>
-                    <li>After sending, email the transaction hash to: arganabridgecapital@gmail.com</li>
-                    <li>Your access will be activated within 24 hours</li>
+                  <h4 className={`font-semibold text-accent mb-2 ${isRTL ? 'text-right' : ''}`}>{t('subscription.cryptoDetails.instructions.title')}</h4>
+                  <ol className={`list-decimal list-inside space-y-2 text-light-dark ${isRTL ? 'text-right' : ''}`}>
+                    <li>{t('subscription.cryptoDetails.instructions.step1')}</li>
+                    <li>{t('subscription.cryptoDetails.instructions.step2')}</li>
+                    <li>{t('subscription.cryptoDetails.instructions.step3')}</li>
+                    <li>{t('subscription.cryptoDetails.instructions.step4')}</li>
                   </ol>
                 </div>
               </div>
@@ -341,7 +322,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                 onClick={() => setShowCryptoAddresses(false)}
                 className="btn bg-dark-lighter hover:bg-dark-light text-light w-full mt-6"
               >
-                Back to Payment Methods
+                {t('subscription.backToPaymentMethods')}
               </button>
             </div>
           )}

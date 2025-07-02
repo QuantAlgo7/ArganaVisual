@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FuturisticShowcase from './components/FuturisticShowcase';
@@ -48,28 +49,30 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-dark text-light">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={
-            <main>
-              <Hero />
-              <FuturisticShowcase />
-              <TradingViewChart />
-              <StrategyDashboard />
-              <Testimonials />
-              <Contact />
-            </main>
-          } />
-          <Route path="/strategies" element={<AllStrategies />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="*" element={<Navigate to="/\" replace />} />
-        </Routes>
-        <Footer />
-        <ChatWidget />
-      </div>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <div className="min-h-screen bg-dark text-light">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={
+              <main>
+                <Hero />
+                <FuturisticShowcase />
+                <TradingViewChart />
+                <StrategyDashboard />
+                <Testimonials />
+                <Contact />
+              </main>
+            } />
+            <Route path="/strategies" element={<AllStrategies />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="*" element={<Navigate to="/\" replace />} />
+          </Routes>
+          <Footer />
+          <ChatWidget />
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 

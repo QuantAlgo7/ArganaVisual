@@ -4,57 +4,7 @@ import { Brain, Search, TrendingUp, Activity, BarChart2, Zap, Maximize2, X, Cloc
 import { useNavigate } from 'react-router-dom';
 import SubscriptionModal from '../components/SubscriptionModal';
 import { strategies } from '../data/strategies';
-
-const categories = [
-  { id: 'all', name: 'All', icon: Brain },
-  { id: 'Indicator', name: 'Indicator', icon: TrendingUp },
-  { id: 'Strategy', name: 'Strategy', icon: Activity },
-  { id: 'Toolkit', name: 'Toolkit', icon: BarChart2 },
-];
-
-const getIndicatorType = (strategy: any, index: number) => {
-  if (index <= 1) {
-    return 'Strategy';
-  }
-  if (index == 2 ) {
-    return 'Indicator';
-  }
-  if (index == 3 ) {
-    return 'Indicator';
-  }
-  if (index == 4 ) {
-    return 'Strategy';
-  }
-  if (index == 5 ) {
-    return 'Strategy';
-  }
-  if (index == 6 ) {
-    return 'Strategy';
-  }
-  if (index == 7 ) {
-    return 'Indicator';
-  }
-  if (index == 8 ) {
-    return 'Indicator';
-  }
-  if (index == 9 ) {
-    return 'Strategy';
-  }
-  if (index == 10 ) {
-    return 'Toolkit';
-  }
-  if (index == 11 ) {
-    return 'Toolkit';
-  }
-  if (index == 12 ) {
-    return 'Toolkit';
-  }
-  if (index == 13 ) {
-    return 'Toolkit';
-  }
-  const types = ['Strategy', 'Toolkit'];
-  return types[Math.floor(Math.random() * types.length)];
-};
+import { useLanguage } from '../contexts/LanguageContext';
 
 const AllStrategies = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<number | null>(null);
@@ -63,6 +13,58 @@ const AllStrategies = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const navigate = useNavigate();
+  const { t, isRTL } = useLanguage();
+
+  const categories = [
+    { id: 'all', name: t('allStrategies.categories.all'), icon: Brain },
+    { id: 'Indicator', name: t('allStrategies.categories.indicator'), icon: TrendingUp },
+    { id: 'Strategy', name: t('allStrategies.categories.strategy'), icon: Activity },
+    { id: 'Toolkit', name: t('allStrategies.categories.toolkit'), icon: BarChart2 },
+  ];
+
+  const getIndicatorType = (strategy: any, index: number) => {
+    if (index <= 1) {
+      return 'Strategy';
+    }
+    if (index == 2 ) {
+      return 'Indicator';
+    }
+    if (index == 3 ) {
+      return 'Indicator';
+    }
+    if (index == 4 ) {
+      return 'Strategy';
+    }
+    if (index == 5 ) {
+      return 'Strategy';
+    }
+    if (index == 6 ) {
+      return 'Strategy';
+    }
+    if (index == 7 ) {
+      return 'Indicator';
+    }
+    if (index == 8 ) {
+      return 'Indicator';
+    }
+    if (index == 9 ) {
+      return 'Strategy';
+    }
+    if (index == 10 ) {
+      return 'Toolkit';
+    }
+    if (index == 11 ) {
+      return 'Toolkit';
+    }
+    if (index == 12 ) {
+      return 'Toolkit';
+    }
+    if (index == 13 ) {
+      return 'Toolkit';
+    }
+    const types = ['Strategy', 'Toolkit'];
+    return types[Math.floor(Math.random() * types.length)];
+  };
 
   const indicatorsWithType = strategies.map((strategy, index) => ({
     ...strategy,
@@ -95,7 +97,7 @@ const AllStrategies = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark overflow-hidden">
+    <div className="min-h-screen bg-dark overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="fixed inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 opacity-30" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,245,196,0.15),transparent_50%)]" />
@@ -103,30 +105,30 @@ const AllStrategies = () => {
       </div>
       
       <div className="container mx-auto px-4 py-24 relative">
-        <div className="flex items-center justify-between mb-8">
+        <div className={`flex items-center justify-between mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-left"
+            className={isRTL ? 'text-right' : 'text-left'}
           >
             <h1 className="text-5xl md:text-6xl font-display font-bold">
               <span className="bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
-                Advanced Trading Indicators
+                {t('allStrategies.title')}
               </span>
             </h1>
           </motion.div>
           <button
             onClick={() => navigate('/')}
-            className="btn-accent flex items-center"
+            className={`btn-accent flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}
           >
-            <ArrowLeft className="mr-2" size={20} />
-            Back to Home
+            <ArrowLeft className={`${isRTL ? 'ml-2' : 'mr-2'}`} size={20} />
+            {t('allStrategies.backToHome')}
           </button>
         </div>
 
         <div className="max-w-6xl mx-auto mb-12">
-          <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
-            <div className="flex flex-wrap gap-3">
+          <div className={`flex flex-col md:flex-row gap-6 items-center justify-between ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+            <div className={`flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               {categories.map(category => (
                 <button
                   key={category.id}
@@ -135,22 +137,22 @@ const AllStrategies = () => {
                     activeCategory === category.id
                       ? 'bg-accent text-dark font-medium'
                       : 'bg-dark-lighter text-light-dark hover:bg-dark-light'
-                  }`}
+                  } ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <category.icon size={16} className="mr-2" />
+                  <category.icon size={16} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
                   {category.name}
                 </button>
               ))}
             </div>
 
             <div className="relative w-full md:w-72">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-accent" size={20} />
+              <Search className={`absolute ${isRTL ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 text-accent`} size={20} />
               <input
                 type="text"
-                placeholder="Search indicators..."
+                placeholder={t('allStrategies.search')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-dark-card border border-dark-lighter rounded-full py-2 pl-12 pr-4 focus:outline-none focus:border-accent transition-colors"
+                className={`w-full bg-dark-card border border-dark-lighter rounded-full py-2 ${isRTL ? 'pr-12 pl-4' : 'pl-12 pr-4'} focus:outline-none focus:border-accent transition-colors`}
               />
             </div>
           </div>
@@ -169,11 +171,12 @@ const AllStrategies = () => {
               className={`card group cursor-pointer hover:border-accent transition-all duration-300 backdrop-blur-sm overflow-hidden ${
                 expandedCard === indicator.id ? 'md:col-span-2 md:row-span-2' : ''
               }`}
+              dir={isRTL ? 'rtl' : 'ltr'}
             >
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-display font-semibold text-accent mb-1 flex items-center">
-                    <Brain className="w-5 h-5 mr-2" />
+              <div className={`flex justify-between items-start mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={isRTL ? 'text-right' : ''}>
+                  <h3 className={`text-xl font-display font-semibold text-accent mb-1 flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <Brain className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                     {indicator.name}
                   </h3>
                   <p className="text-light-dark text-sm">
@@ -183,7 +186,7 @@ const AllStrategies = () => {
                 <button 
                   onClick={() => handleCardExpand(indicator.id)}
                   className="text-light-dark hover:text-accent transition-colors p-1"
-                  aria-label={expandedCard === indicator.id ? "Collapse details" : "Expand details"}
+                  aria-label={expandedCard === indicator.id ? t('allStrategies.collapseDetails') : t('allStrategies.expandDetails')}
                 >
                   {expandedCard === indicator.id ? (
                     <X size={18} />
@@ -200,7 +203,7 @@ const AllStrategies = () => {
                   alt={indicator.name}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-4 right-4 z-20">
+                <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-20`}>
                   <span className={`text-xs px-3 py-1 rounded-full backdrop-blur-sm ${
                     indicator.indicatorType === 'Indicator' ? 'bg-blue-500/10 text-blue-400' :
                     indicator.indicatorType === 'Strategy' ? 'bg-green-500/10 text-green-400' :
@@ -212,25 +215,25 @@ const AllStrategies = () => {
               </div>
 
               {expandedCard === indicator.id && (
-                <div className="mt-6 space-y-4">
+                <div className={`mt-6 space-y-4 ${isRTL ? 'text-right' : ''}`}>
                   <div>
-                    <h4 className="text-lg font-semibold mb-2">Description</h4>
+                    <h4 className="text-lg font-semibold mb-2">{t('allStrategies.description')}</h4>
                     <p className="text-light-dark">{indicator.longDescription}</p>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold mb-2">Indicator Architecture</h4>
+                    <h4 className="text-lg font-semibold mb-2">{t('allStrategies.architecture')}</h4>
                     <p className="text-light-dark">{indicator.indicatorArchitecture}</p>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold mb-2">Market Application</h4>
+                    <h4 className="text-lg font-semibold mb-2">{t('allStrategies.marketApplication')}</h4>
                     <p className="text-light-dark">{indicator.marketApplication}</p>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold mb-2 flex items-center">
-                      <Clock size={18} className="mr-2 text-accent" />
-                      Timeframes
+                    <h4 className={`text-lg font-semibold mb-2 flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      <Clock size={18} className={`${isRTL ? 'ml-2' : 'mr-2'} text-accent`} />
+                      {t('allStrategies.timeframes')}
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className={`flex flex-wrap gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                       {indicator.timeframes.map((timeframe) => (
                         <span 
                           key={timeframe}
@@ -255,10 +258,10 @@ const AllStrategies = () => {
                   setSelectedStrategy(indicator.id);
                   setShowModal(true);
                 }}
-                className="btn-accent w-full mt-6 group-hover:bg-accent group-hover:text-dark"
+                className={`btn-accent w-full mt-6 group-hover:bg-accent group-hover:text-dark ${isRTL ? 'flex-row-reverse' : ''}`}
               >
-                <Zap size={16} className="mr-2" />
-                Subscribe Now
+                <Zap size={16} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
+                {t('allStrategies.subscribeNow')}
               </button>
             </motion.div>
           ))}

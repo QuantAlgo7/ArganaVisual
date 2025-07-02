@@ -21,7 +21,7 @@ export const strategies: Strategy[] = [
     Architecture: 'A dynamic trend-following and mean-reversion hybrid strategy that leverages layered momentum signals, volatility bands, and adaptive filters to detect high-probability bullish or bearish breakouts.',
     marketApplication: 'BTCUSD, EURUSD, SP500',
     timeframes: ['M5', 'M10', 'M15', 'H1'],
-    chartUrl: 'https://i.imgur.com/mxXpY95.png',
+    chartUrl: 'https://i.imgur.com/UNJ2ITU.png',
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Trend, reversal, swing, and volatility analysis',
     marketApplication: 'BTCUSD, EURUSD, SP500',
     timeframes: ['M3', 'M5', 'M15', 'H4'],
-    chartUrl: 'https://i.imgur.com/GBtWTkp.png',
+    chartUrl: 'https://i.imgur.com/2xhCyZD.png',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Order Blocks /Fair Value Gaps /BOS & CHOCH/ Order Blocks / Fair Value Gaps / BOS & CHOCH / Liquidity Pools / Mitigation Zones / Stop Hunts / Market Structure Swings / Volume Clusters / Supply & Demand Zones / Institutional Imbalance / Order Flow / Smart Money Traps / Wyckoff Phases / Price Rejection / Market Maker Manipulation / Entry/Exit Zones / Multi-Timeframe Confluence / Momentum Shifts / VWAP Zones',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/NvEtjh5.png',
+    chartUrl: 'https://i.imgur.com/On5fUqP.png',
   },
   {
     id: 4,
