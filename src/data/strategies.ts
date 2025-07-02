@@ -54,7 +54,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Liquidity Zones / Sweeps / Volume Spikes / Order Flow Imbalance / AI Learning',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/H9aXN0Y.png',
+    chartUrl: 'https://i.imgur.com/I6nX2J4.png',
   },
     {
     id: 5,
@@ -65,7 +65,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Liquidity Zones / Sweeps / Volume Spikes / Order Flow Imbalance / AI Learning',
     marketApplication: 'CRYPTO, NAS100, XAUUSD',
     timeframes: ['5M', '15M', '30M'],
-    chartUrl: 'https://i.imgur.com/zcrzsEI.png',
+    chartUrl: 'https://i.imgur.com/ofJLa5B.png',
   },
   {
     id: 6,
@@ -76,7 +76,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Liquidity Zones / Sweeps / Volume Spikes / Order Flow Imbalance / AI Learning',
     marketApplication: 'BTCUSD, ETHUSD, EURUSD, SP500',
     timeframes: ['M5', 'M30', 'H1', 'H4', '1D'],
-    chartUrl: 'https://i.imgur.com/7Rlg9LC.png',
+    chartUrl: 'https://i.imgur.com/Vzlq18W.png',
   },
   {
     id: 7,
@@ -87,7 +87,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Liquidity Zones / Sweeps / Volume Spikes / Order Flow Imbalance / AI Learning',
     marketApplication: 'BTCUSD, ETHUSD, EURUSD, US30',
     timeframes: ['M10', 'M15', 'M30', 'H1'],
-    chartUrl: 'https://i.imgur.com/OATauk6.png',
+    chartUrl: 'https://i.imgur.com/uqDnc6M.png',
   },
   {
     id: 9,
@@ -98,7 +98,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Harmonic Patterns / Pattern Quality Filters / Statistical Validation / Reversal Zones / Momentum Confirmation / Volatility Adjustment',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/OPz5BQt.png',
+    chartUrl: 'https://i.imgur.com/ws98RjC.png',
   },
   {
     id: 10,
@@ -109,7 +109,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/fSbeGfI.png',
+    chartUrl: 'https://i.imgur.com/n2B7r8k.png',
   },
   {
     id: 11,
@@ -120,7 +120,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/SyMdR0Z.png',
+    chartUrl: 'https://i.imgur.com/ZMY3gyy.png',
   },
     {
     id: 12,
@@ -131,7 +131,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/8IJvvZq.png',
+    chartUrl: 'https://i.imgur.com/wIBxRtj.jpeg',
   },
       {
     id: 13,
@@ -142,7 +142,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/8Go3XOa.png',
+    chartUrl: 'https://i.imgur.com/NtXNGak.png',
   },
 {
     id: 14,
@@ -153,7 +153,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/8Go3XOa.png',
+    chartUrl: 'https://i.imgur.com/NtXNGak.png',
   },
   {
     id: 15,
@@ -164,7 +164,7 @@ export const strategies: Strategy[] = [
     Architecture: 'Dynamic Zones / Divergence Detection / Price Structure Sync / Momentum Filters / Volatility Adaptation / Trend Confirmation',
     marketApplication: 'ALL',
     timeframes: ['ALL'],
-    chartUrl: 'https://i.imgur.com/j9Byl17.png',
+    chartUrl: 'https://i.imgur.com/hsEz40V.jpeg',
   },
   
 ];
