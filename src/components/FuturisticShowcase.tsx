@@ -5,23 +5,23 @@ import ParticleNetwork from '../utils/ParticleNetwork';
 
 const showcaseImages = [
   {
-    url: 'https://i.imgur.com/bmO4Iy8.png',
+    url: 'https://i.imgur.com/0ejjUNi.jpeg',
     caption: 'Quant Algo 1'
   },
   {
-    url: 'https://i.imgur.com/YAjzTd2.png',
+    url: 'https://i.imgur.com/9QRIHha.jpeg',
     caption: 'Quant Algo 2'
   },
   {
-    url: 'https://i.imgur.com/rdAaaWQ.png',
+    url: 'https://i.imgur.com/NtXNGak.png',
     caption: 'Correlation Toolkit Argana'
   },
   {
-    url: 'https://i.imgur.com/ysld3YX.png',
+    url: 'https://i.imgur.com/Ll67U0v.jpeg',
     caption: 'Quant algo 3'
   },
   {
-    url: 'https://i.imgur.com/RL3wOZX.png',
+    url: 'https://i.imgur.com/DigRUYa.jpeg',
     caption: 'Argana Bridge Capital Indicators'
   }
 ];
