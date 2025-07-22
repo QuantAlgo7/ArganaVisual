@@ -9,15 +9,16 @@ interface StrategyCardProps {
 }
 
 const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
-  const [expanded, setExpanded] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const { t, isRTL } = useLanguage();
 
-  const toggleExpand = () => {
-    setExpanded(!expanded);
-  };
-
   return (
-    <div className={`card overflow-hidden transition-all duration-300 ${expanded ? 'md:col-span-2 md:row-span-2' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div 
+      className={`card overflow-hidden transition-all duration-500 ease-in-out ${isHovered ? 'md:col-span-2 md:row-span-2 z-10 shadow-2xl shadow-accent/20 border-accent' : 'hover:border-accent/50'}`} 
+      dir={isRTL ? 'rtl' : 'ltr'}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className={`flex justify-between items-start mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
         <div className={isRTL ? 'text-right' : ''}>
           <h3 className="text-xl font-display font-semibold text-accent mb-1">
@@ -27,19 +28,20 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
             {strategy.shortDescription}
           </p>
         </div>
-        <button 
-          onClick={toggleExpand}
-          className="text-light-dark hover:text-accent transition-colors p-1"
-          aria-label="Expand strategy card"
-        >
-          <Maximize2 size={18} />
-        </button>
+        <div className="text-light-dark p-1">
+          <Maximize2 
+            size={18} 
+            className={`transition-all duration-300 ${isHovered ? 'text-accent scale-110' : ''}`}
+          />
+        </div>
       </div>
 
       {/* Strategy performance chart */}
       {strategy.chartUrl && (
         <div 
-          className="w-full h-32 mb-6 overflow-hidden rounded-md bg-dark-light"
+          className={`w-full mb-6 overflow-hidden rounded-md bg-dark-light transition-all duration-500 ${
+            isHovered ? 'h-48' : 'h-32'
+          }`}
           style={{ 
             backgroundImage: `url(${strategy.chartUrl})`, 
             backgroundSize: 'cover',
@@ -48,8 +50,8 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
         ></div>
       )}
 
-      {expanded && (
-        <div className={`my-4 ${isRTL ? 'text-right' : ''}`}>
+      {isHovered && (
+        <div className={`my-4 animate-in fade-in duration-300 ${isRTL ? 'text-right' : ''}`}>
           <p className="text-light-dark mb-4">
             {strategy.longDescription}
           </p>
@@ -66,7 +68,9 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
       
       <button 
         onClick={onBuyClick} 
-        className="btn-accent w-full mt-2"
+        className={`btn-accent w-full mt-2 transition-all duration-300 ${
+          isHovered ? 'bg-accent text-dark hover:bg-accent-light' : ''
+        }`}
       >
         {t('strategies.subscribeToStrategy')}
       </button>

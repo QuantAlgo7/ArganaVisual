@@ -61,7 +61,7 @@ const FuturisticShowcase = () => {
   };
 
   return (
-    <section className="relative h-screen overflow-hidden bg-dark">
+    <section id="showcase" className="relative h-screen overflow-hidden bg-dark">
       <div ref={particleRef} className="particle-container"></div>
       
       {/* Screen Frame */}
@@ -105,6 +105,26 @@ const FuturisticShowcase = () => {
                   {showcaseImages[currentIndex].caption}
                 </h2>
                 <div className="h-1 w-24 mx-auto bg-gradient-to-r from-accent to-primary-light rounded-full"></div>
+                
+                {/* Explore Strategies Button */}
+                <motion.div 
+                  className="flex justify-center mt-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <button 
+                    className="btn-accent"
+                    onClick={() => {
+                      const strategiesSection = document.getElementById('strategies');
+                      if (strategiesSection) {
+                        strategiesSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    Explore Strategies
+                  </button>
+                </motion.div>
               </div>
             </motion.div>
 

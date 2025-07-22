@@ -11,7 +11,7 @@ const AllStrategies = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const navigate = useNavigate();
   const { t, isRTL } = useLanguage();
 
@@ -92,9 +92,6 @@ const AllStrategies = () => {
     show: { opacity: 1, y: 0 }
   };
 
-  const handleCardExpand = (id: number) => {
-    setExpandedCard(expandedCard === id ? null : id);
-  };
 
   return (
     <div className="min-h-screen bg-dark overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -169,9 +166,11 @@ const AllStrategies = () => {
               key={indicator.id}
               variants={item}
               className={`card group cursor-pointer hover:border-accent transition-all duration-300 backdrop-blur-sm overflow-hidden ${
-                expandedCard === indicator.id ? 'md:col-span-2 md:row-span-2' : ''
+                hoveredCard === indicator.id ? 'md:col-span-2 md:row-span-2 z-10 shadow-2xl shadow-accent/20' : ''
               }`}
               dir={isRTL ? 'rtl' : 'ltr'}
+              onMouseEnter={() => setHoveredCard(indicator.id)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
               <div className={`flex justify-between items-start mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <div className={isRTL ? 'text-right' : ''}>
@@ -183,20 +182,17 @@ const AllStrategies = () => {
                     {indicator.shortDescription}
                   </p>
                 </div>
-                <button 
-                  onClick={() => handleCardExpand(indicator.id)}
-                  className="text-light-dark hover:text-accent transition-colors p-1"
-                  aria-label={expandedCard === indicator.id ? t('allStrategies.collapseDetails') : t('allStrategies.expandDetails')}
-                >
-                  {expandedCard === indicator.id ? (
-                    <X size={18} />
-                  ) : (
-                    <Maximize2 size={18} />
-                  )}
-                </button>
+                <div className="text-light-dark p-1">
+                  <Maximize2 
+                    size={18} 
+                    className={`transition-all duration-300 ${hoveredCard === indicator.id ? 'text-accent scale-110' : ''}`}
+                  />
+                </div>
               </div>
 
-              <div className="relative h-48 -mx-6 -mt-6 mb-6 overflow-hidden">
+              <div className={`relative -mx-6 -mt-6 mb-6 overflow-hidden transition-all duration-500 ${
+                hoveredCard === indicator.id ? 'h-64' : 'h-48'
+              }`}>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark z-10" />
                 <img 
                   src={indicator.chartUrl} 
@@ -214,8 +210,8 @@ const AllStrategies = () => {
                 </div>
               </div>
 
-              {expandedCard === indicator.id && (
-                <div className={`mt-6 space-y-4 ${isRTL ? 'text-right' : ''}`}>
+              {hoveredCard === indicator.id && (
+                <div className={`mt-6 space-y-4 animate-in fade-in duration-300 ${isRTL ? 'text-right' : ''}`}>
                   <div>
                     <h4 className="text-lg font-semibold mb-2">{t('allStrategies.description')}</h4>
                     <p className="text-light-dark">{indicator.longDescription}</p>
@@ -246,9 +242,7 @@ const AllStrategies = () => {
                   </div>
                   
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-                    <div className="bg-dark-lighter p-4 rounded-lg">
-
-                    </div>
+                    {/* Additional metrics can be added here */}
                   </div>
                 </div>
               )}
@@ -258,7 +252,9 @@ const AllStrategies = () => {
                   setSelectedStrategy(indicator.id);
                   setShowModal(true);
                 }}
-                className={`btn-accent w-full mt-6 group-hover:bg-accent group-hover:text-dark ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`btn-accent w-full mt-6 transition-all duration-300 ${
+                  hoveredCard === indicator.id ? 'bg-accent text-dark hover:bg-accent-light' : 'group-hover:bg-accent group-hover:text-dark'
+                } ${isRTL ? 'flex-row-reverse' : ''}`}
               >
                 <Zap size={16} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
                 {t('allStrategies.subscribeNow')}
