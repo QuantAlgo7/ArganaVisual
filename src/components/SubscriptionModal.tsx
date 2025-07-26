@@ -206,7 +206,23 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
 
   const handlePaymentMethodSelect = (method: 'crypto' | 'card') => {
     if (method === 'card') {
-      window.location.href = 'https://arganabridgecapital.gumroad.com/l/eijwo?_gl=1*qb9rlx*_ga*MTUxNDU5NDU1OC4xNzQ4NzE4OTg5*_ga_6LJN6D94N6*czE3NDg5NTEwMTAkbzMkZzEkdDE3NDg5NTU3OTMkajQxJGww';
+      // Redirect to appropriate Whop checkout based on selected plan
+      let checkoutUrl = '';
+      switch (selectedPlan) {
+        case 'starter':
+          checkoutUrl = 'https://whop.com/checkout/plan_vXDM6Thx1FgCc?d2c=true';
+          break;
+        case 'pro':
+          checkoutUrl = 'https://whop.com/checkout/plan_Xjv7AR9b6VlKZ?d2c=true';
+          break;
+        case 'elite':
+          checkoutUrl = 'https://whop.com/checkout/plan_eCv3oQGm32o5e?d2c=true';
+          break;
+        default:
+          // Fallback to pro plan if no plan selected
+          checkoutUrl = 'https://whop.com/checkout/plan_Xjv7AR9b6VlKZ?d2c=true';
+      }
+      window.location.href = checkoutUrl;
     } else {
       setShowCryptoAddresses(true);
     }
@@ -459,7 +475,8 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                   <p className="text-light-dark text-sm mb-4 relative z-10">
                     Secure payment via credit card or PayPal
                   </p>
-                  <div className="text-xs text-green-400 font-medium relative z-10">Instant access • Processed by Gumroad</div>
+                  <div className="text-xs text-green-400 font-medium relative z-10">Instant access</div>
+                  <div className="text-xs text-green-400 font-medium relative z-10">Instant access • Processed by Whop</div>
                 </motion.div>
               </div>
 
