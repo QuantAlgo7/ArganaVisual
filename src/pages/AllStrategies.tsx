@@ -166,7 +166,7 @@ const AllStrategies = () => {
               key={indicator.id}
               variants={item}
               className={`card group cursor-pointer hover:border-accent transition-all duration-300 backdrop-blur-sm overflow-hidden ${
-                hoveredCard === indicator.id ? 'md:col-span-2 md:row-span-2 z-10 shadow-2xl shadow-accent/20' : ''
+                hoveredCard === indicator.id ? 'transform scale-110 origin-top z-10 shadow-2xl shadow-accent/20 border-accent' : 'hover:border-accent/50'
               }`}
               dir={isRTL ? 'rtl' : 'ltr'}
               onMouseEnter={() => setHoveredCard(indicator.id)}
@@ -191,7 +191,7 @@ const AllStrategies = () => {
               </div>
 
               <div className={`relative -mx-6 -mt-6 mb-6 overflow-hidden transition-all duration-500 ${
-                hoveredCard === indicator.id ? 'h-64' : 'h-48'
+                hoveredCard === indicator.id ? 'h-72' : 'h-48'
               }`}>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark z-10" />
                 <img 
@@ -211,7 +211,7 @@ const AllStrategies = () => {
               </div>
 
               {hoveredCard === indicator.id && (
-                <div className={`mt-6 space-y-4 animate-in fade-in duration-300 ${isRTL ? 'text-right' : ''}`}>
+                <div className={`mt-6 space-y-4 animate-in fade-in duration-500 ${isRTL ? 'text-right' : ''}`}>
                   <div>
                     <h4 className="text-lg font-semibold mb-2">{t('allStrategies.description')}</h4>
                     <p className="text-light-dark">{indicator.longDescription}</p>

@@ -14,7 +14,7 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
 
   return (
     <div 
-      className={`card overflow-hidden transition-all duration-500 ease-in-out ${isHovered ? 'md:col-span-2 md:row-span-2 z-10 shadow-2xl shadow-accent/20 border-accent' : 'hover:border-accent/50'}`} 
+      className={`card overflow-hidden transition-all duration-500 ease-in-out ${isHovered ? 'transform scale-110 origin-top z-10 shadow-2xl shadow-accent/20 border-accent' : 'hover:border-accent/50'}`} 
       dir={isRTL ? 'rtl' : 'ltr'}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -40,7 +40,7 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
       {strategy.chartUrl && (
         <div 
           className={`w-full mb-6 overflow-hidden rounded-md bg-dark-light transition-all duration-500 ${
-            isHovered ? 'h-48' : 'h-32'
+            isHovered ? 'h-56' : 'h-32'
           }`}
           style={{ 
             backgroundImage: `url(${strategy.chartUrl})`, 
@@ -51,7 +51,7 @@ const StrategyCard = ({ strategy, onBuyClick }: StrategyCardProps) => {
       )}
 
       {isHovered && (
-        <div className={`my-4 animate-in fade-in duration-300 ${isRTL ? 'text-right' : ''}`}>
+        <div className={`my-4 animate-in fade-in duration-500 ${isRTL ? 'text-right' : ''}`}>
           <p className="text-light-dark mb-4">
             {strategy.longDescription}
           </p>
