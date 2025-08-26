@@ -6,7 +6,6 @@ import Hero from './components/Hero';
 import FuturisticShowcase from './components/FuturisticShowcase';
 import StrategyDashboard from './components/StrategyDashboard';
 import TradingViewChart from './components/TradingViewChart';
-import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AllStrategies from './pages/AllStrategies';
@@ -60,7 +59,6 @@ function App() {
                 <FuturisticShowcase />
                 <TradingViewChart />
                 <StrategyDashboard />
-                <Testimonials />
                 <Contact />
               </main>
             } />

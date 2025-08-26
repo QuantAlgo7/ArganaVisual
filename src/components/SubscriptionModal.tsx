@@ -132,7 +132,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     {
       id: 'starter',
       name: 'Starter',
-      price: '$24',
+      price: '$69',
       period: '/month',
       description: 'Perfect for individual traders getting started',
       icon: TrendingUp,
@@ -149,7 +149,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     {
       id: 'pro',
       name: 'Pro',
-      price: '$39',
+      price: '$99',
       period: '/month',
       description: 'Most popular choice for serious traders',
       icon: Zap,
@@ -167,7 +167,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
     {
       id: 'elite',
       name: 'Elite',
-      price: '$69',
+      price: '$149',
       period: '/month',
       description: 'For professional traders and institutions',
       icon: Brain,

@@ -84,7 +84,6 @@ const Navbar = () => {
             <NavLink href="#home" label={t('nav.home')} />
             <NavLink href="#chart" label={t('nav.vision')} />
             <NavLink href="/strategies" label={t('nav.strategies')} />
-            <NavLink href="#testimonials" label={t('nav.testimonials')} />
             <NavLink href="#contact" label={t('nav.contact')} />
             <NavLink href="/faq" label={t('nav.faq')} />
           </nav>
@@ -119,7 +118,6 @@ const Navbar = () => {
               <NavLink href="#home" label={t('nav.home')} />
               <NavLink href="#chart" label={t('nav.vision')} />
               <NavLink href="/strategies" label={t('nav.strategies')} />
-              <NavLink href="#testimonials" label={t('nav.testimonials')} />
               <NavLink href="#contact" label={t('nav.contact')} />
               <NavLink href="/faq" label={t('nav.faq')} />
               <button 
