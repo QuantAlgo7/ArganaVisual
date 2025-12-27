@@ -130,23 +130,6 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
 
   const plans = [
     {
-      id: 'starter',
-      name: 'Starter',
-      price: '$69',
-      period: '/month',
-      description: 'Perfect for individual traders getting started',
-      icon: TrendingUp,
-      features: [
-        'Access to all our indicators',
-        'Access to our private community',
-        'Access to our premium trading tools',
-        'Email support',
-        'Basic tutorials & guides'
-      ],
-      popular: false,
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
       id: 'pro',
       name: 'Pro',
       price: '$99',
@@ -209,18 +192,15 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
       // Redirect to appropriate Whop checkout based on selected plan
       let checkoutUrl = '';
       switch (selectedPlan) {
-        case 'starter':
-          checkoutUrl = 'https://whop.com/checkout/plan_vXDM6Thx1FgCc?d2c=true';
-          break;
         case 'pro':
-          checkoutUrl = 'https://whop.com/checkout/plan_Xjv7AR9b6VlKZ?d2c=true';
+          checkoutUrl = 'https://whop.com/argana-bridge-capital-7/argana-quant-edge/';
           break;
         case 'elite':
-          checkoutUrl = 'https://whop.com/checkout/plan_eCv3oQGm32o5e?d2c=true';
+          checkoutUrl = 'https://whop.com/argana-bridge-capital-7/argana-quant-edge/';
           break;
         default:
           // Fallback to pro plan if no plan selected
-          checkoutUrl = 'https://whop.com/checkout/plan_Xjv7AR9b6VlKZ?d2c=true';
+          checkoutUrl = 'https://whop.com/argana-bridge-capital-7/argana-quant-edge/';
       }
       window.location.href = checkoutUrl;
     } else {
@@ -280,7 +260,7 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
           {!showPaymentOptions ? (
             <>
               {/* Plans Grid */}
-              <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-8">
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-8">
                 {plans.map((plan) => {
                   const Icon = plan.icon;
                   return (
@@ -306,7 +286,6 @@ const SubscriptionModal = ({ onClose, strategy }: SubscriptionModalProps) => {
                       )}
                       
                       {/* Glow effect */}
-                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${plan.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
                       
                       <div className="text-center mb-6 relative z-10">
                         <div className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r ${plan.gradient} rounded-lg mb-4 shadow-lg`}>
