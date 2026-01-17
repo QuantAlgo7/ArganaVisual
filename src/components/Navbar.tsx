@@ -83,7 +83,6 @@ const Navbar = () => {
           <nav className={`hidden md:flex gap-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <NavLink href="#home" label={t('nav.home')} />
             <NavLink href="#chart" label={t('nav.vision')} />
-            <NavLink href="/strategies" label={t('nav.strategies')} />
             <NavLink href="#contact" label={t('nav.contact')} />
             <NavLink href="/faq" label={t('nav.faq')} />
           </nav>
@@ -117,7 +116,6 @@ const Navbar = () => {
             <nav className={`container mx-auto px-4 flex flex-col space-y-4 ${isRTL ? 'text-right' : ''}`}>
               <NavLink href="#home" label={t('nav.home')} />
               <NavLink href="#chart" label={t('nav.vision')} />
-              <NavLink href="/strategies" label={t('nav.strategies')} />
               <NavLink href="#contact" label={t('nav.contact')} />
               <NavLink href="/faq" label={t('nav.faq')} />
               <button 

@@ -1,9 +1,4 @@
 import { useState, useEffect } from 'react';
-import { DollarSign } from 'lucide-react';
-import SubscriptionModal from './SubscriptionModal';
-import StrategyCard from './StrategyCard';
-import { strategies } from '../data/strategies';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const platforms = [
@@ -30,10 +25,7 @@ const platforms = [
 ];
 
 const StrategyDashboard = () => {
-  const [selectedStrategy, setSelectedStrategy] = useState<number | null>(null);
-  const [showModal, setShowModal] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const navigate = useNavigate();
   const { t, isRTL } = useLanguage();
 
   useEffect(() => {
@@ -44,56 +36,11 @@ const StrategyDashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleBuyClick = (id: number) => {
-    setSelectedStrategy(id);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const handleViewAllStrategies = () => {
-    navigate('/strategies');
-    window.scrollTo(0, 0);
-  };
-
   return (
     <section id="strategies" className="section bg-dark relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="container mx-auto relative z-10">
-        <div className={`text-center max-w-3xl mx-auto mb-16 ${isRTL ? 'text-right' : ''}`}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            {t('strategies.title')}
-          </h2>
-          <p className="text-light-dark">
-            {t('strategies.description')}
-          </p>
-        </div>
-
-        {/* Strategy cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {strategies.slice(0, 6).map((strategy) => (
-            <StrategyCard 
-              key={strategy.id}
-              strategy={strategy}
-              onBuyClick={() => handleBuyClick(strategy.id)}
-            />
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-16 text-center">
-          <button 
-            className="btn-primary"
-            onClick={handleViewAllStrategies}
-          >
-            <DollarSign size={18} className={`${isRTL ? 'ml-2' : 'mr-2'}`} />
-            {t('strategies.viewAll')}
-          </button>
-        </div>
-
         {/* Platform Band */}
-        <div className="mt-24">
+        <div>
           <h3 className="text-2xl md:text-4xl font-display font-bold text-center mb-12 bg-gradient-to-r from-accent via-primary-light to-secondary bg-clip-text text-transparent">
             {t('strategies.platformsTitle')}
           </h3>
@@ -124,14 +71,6 @@ const StrategyDashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Subscription Modal */}
-      {showModal && (
-        <SubscriptionModal 
-          onClose={closeModal} 
-          strategy={strategies.find(s => s.id === selectedStrategy) || strategies[0]} 
-        />
-      )}
     </section>
   );
 };
